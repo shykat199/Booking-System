@@ -7,8 +7,11 @@ use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mockery\Exception;
 use Nette\Schema\ValidationException;
 
 class AuthController extends Controller
@@ -40,6 +43,7 @@ class AuthController extends Controller
                         'data' => [
                             'name' => $user->name,
                             'email' => $user->email,
+                            'role' => $user->role == ADMIN_ROLE ? 'Admin' : 'User',
                             'email_verified_at'=> (bool)$user->email_verified_at,
                         ],
                         'token' => $token
@@ -101,10 +105,11 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'User registered successfully',
+                'message' => 'Customer registered successfully',
                 'data' => [
                     'name' => $user->name,
                     'email' => $user->email,
+                    'role' => $user->role == ADMIN_ROLE ? 'Admin' : 'User',
                     'email_verified_at' => (bool)$user->email_verified_at,
                 ],
                 'token' => $token
@@ -123,6 +128,48 @@ class AuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    /**
+     * Log out the authenticated user by revoking their access token.
+     *
+     * This method retrieves the current user's API token and revokes it and
+     * returns a JSON response indicating
+     * success or failure.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        try {
+            $user = Auth::guard('api')->user();
+
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not authenticated',
+                    'data' => []
+                ], 401);
+            }
+
+            $token = $user->token();
+            $token->revoke();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully logged out',
+                'data' => []
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something went wrong! Try again. ' . $e->getMessage(),
+                'data' => []
             ], 500);
         }
     }
