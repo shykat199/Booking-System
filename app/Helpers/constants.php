@@ -1,0 +1,7 @@
+<?php
+const ADMIN_ROLE = 1;
+const USER_ROLE = 2;
+const PENDING_STATUS = 0;
+const ACTIVE_STATUS = 1;
+const INACTIVE_STATUS = 2;
+const DELETE_STATUS = 3;
