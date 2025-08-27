@@ -22,6 +22,13 @@ Route::prefix('v1')->group(function () {
             Route::get('bookings', [ServiceController::class, 'userBookingServiceList']);
             Route::post('bookings', [ServiceController::class, 'bookService']);
 
+            Route::middleware('is_admin')->group(function () {
+                Route::post('services', [ServiceController::class, 'saveService']);
+                Route::put('services/{id}', [ServiceController::class, 'updateService']);
+                Route::delete('services/{id}', [ServiceController::class, 'deleteService']);
+                Route::get('bookings', [ServiceController::class, 'listOfBookings']);
+            });
+
         });
 
     });

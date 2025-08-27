@@ -12,4 +12,9 @@ class Service extends Model
         'price',
         'status'
     ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
 }
