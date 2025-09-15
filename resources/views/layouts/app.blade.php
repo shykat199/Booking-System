@@ -91,15 +91,22 @@
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.23.0/sweetalert2.min.js" integrity="sha512-pnPZhx5S+z5FSVwy62gcyG2Mun8h6R+PG01MidzU+NGF06/ytcm2r6+AaWMBXAnDHsdHWtsxS0dH8FBKA84FlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
 <script>
-    $(document).ready(function(){
-        $(".user-task").on("click", function(){
-            let submenu = $(this).next(".sidebar-submenu");
-            if (submenu.css("display") === "none") {
-                submenu.css("display", "block");
-            } else {
-                submenu.css("display", "none");
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        const userTasks = document.querySelectorAll('.user-task');
+
+        userTasks.forEach(function(task) {
+            task.addEventListener('click', function() {
+                const submenu = task.nextElementSibling;
+                if (submenu && submenu.classList.contains('sidebar-submenu')) {
+                    if (submenu.style.display === 'block') {
+                        submenu.style.display = 'none';
+                    } else {
+                        submenu.style.display = 'block';
+                    }
+                }
+            });
         });
     });
 </script>
