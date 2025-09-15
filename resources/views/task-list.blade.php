@@ -11,17 +11,16 @@
         }
 
 
-
         .header {
             background: #308e87;
             color: white;
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: 12px 12px 0 0;
         }
 
         .task-input-container {
             background: white;
-            padding: 1.5rem;
+            padding: 1rem;
             border-bottom: 1px solid #e9ecef;
         }
 
@@ -91,12 +90,6 @@
             box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: var(--secondary);
-        }
-
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 1rem;
@@ -162,27 +155,17 @@
                             </button>
                         </div>
                     </div>
+                    <div class="task-filters mt-3">
+                        <a href="{{route('tasks',['type'=>'all'])}}" class="btn btn-outline-primary btn-sm filter-btn" data-filter="all">All</a>
+                        <a href="{{route('tasks',['type'=>'completed'])}}" class="btn btn-outline-success btn-sm filter-btn" data-filter="completed">Completed</a>
+                        <a href="{{route('tasks',['type'=>'pending'])}}" class="btn btn-outline-warning btn-sm filter-btn" data-filter="pending">Pending</a>
+                    </div>
+
                 </div>
 
                 <ul class="task-list" id="taskList">
                     @foreach($tasks as $key => $task)
-                        <li class="task-item {{$task->is_completed ? 'completed':''}}" data-taskId="{{ $task->id }}">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" data-taskId = "{{$task->id}}" id="task{{$task->id}}" {{$task->is_completed ? 'checked':''}}>
-                                <label class="custom-control-label" for="task{{$task->id}}"></label>
-                            </div>
-                            <span class="task-text">{{$task->title}}</span>
-
-                            <small class="text-muted me-3" title="{{ $task->created_at }}">
-                                {{ $task->created_at->diffForHumans() }}
-                            </small>
-
-                            <div class="task-actions">
-                                <button class="btn-action btn-delete text-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </li>
+                        @include('partials.task-item', ['task' => $task])
                     @endforeach
                 </ul>
 
