@@ -11,9 +11,17 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['tasks'] = Task::orderBy('id','DESC')->get();
+        $type = $request->get('type', 'all');
+        $tasks = Task::orderBy('id','DESC');
+        if ($type === 'completed') {
+            $tasks = $tasks->where('is_completed', true);
+        } elseif ($type === 'pending') {
+            $tasks = $tasks->where('is_completed', false);
+        }
+        $tasks=$tasks->get();
+        $data['tasks'] = $tasks;
         return view('task-list', $data);
     }
 
