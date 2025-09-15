@@ -114,7 +114,7 @@ class ServiceController extends Controller
                     'data' => []
                 ], 422);
             }
-            
+
 
             $booking = ServiceBooking::create([
                 'user_id' => $user->id,
