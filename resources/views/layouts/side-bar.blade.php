@@ -4,7 +4,7 @@
         <ul class="sidebar-menu" id="simple-bar">
 
             <li class="sidebar-list {{request()->routeIs('tasks') ? 'active' : ''}}">
-                <a class="sidebar-link" href="javascript:void(0)">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
                     <i class="fa-solid fa-list-check"></i>
                     <h6>User Task</h6>
                 </a>
