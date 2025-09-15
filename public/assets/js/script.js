@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(event);
     });
   };
-  displayButton();
-  scrollToTop();
+  // displayButton();
+  // scrollToTop();
   /*=====================
       03 Header DropDown Toggle
   ==========================*/
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $(document).ready(function () {
     $(".full-screen").click(function (event) {
       var elem = document.documentElement;
-  
+
       if (
         (document.fullScreenElement && document.fullScreenElement !== null) ||
         (!document.mozFullScreen && !document.webkitIsFullScreen)
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-  
+
   /*=====================
        05. Header search js
      ==========================*/
