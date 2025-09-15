@@ -312,8 +312,6 @@
 
             function updateStatus(action, taskId, status) {
 
-                console.log(taskId,'taskId')
-
                 let url = '/tasks/:id/update'.replace(':id', taskId);
 
                 $.ajax({
