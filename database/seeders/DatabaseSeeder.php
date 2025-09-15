@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ServiceSeeder::class,
             ServiceBookingSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

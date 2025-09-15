@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
                 Route::post('services', [ServiceController::class, 'saveService']);
                 Route::put('services/{id}', [ServiceController::class, 'updateService']);
                 Route::delete('services/{id}', [ServiceController::class, 'deleteService']);
-                Route::get('bookings', [ServiceController::class, 'listOfBookings']);
+                Route::get('booking-list', [ServiceController::class, 'listOfBookings']);
             });
 
         });
