@@ -294,6 +294,8 @@
 
                             btn.html(originalHtml);
                             btn.prop('disabled', false);
+
+                            window.location.reload();
                         }
                     },
                     error: function(xhr, status, error) {
