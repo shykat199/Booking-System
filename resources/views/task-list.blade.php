@@ -237,9 +237,9 @@
                 const isCompleted = taskItem.hasClass('completed');
 
                 if (isCompleted) {
-                    taskItem.addClass('completed');
-                } else {
                     taskItem.removeClass('completed');
+                } else {
+                    taskItem.addClass('completed');
                 }
 
                 updateStatus('update', taskId, !isCompleted);
@@ -295,7 +295,7 @@
                             btn.html(originalHtml);
                             btn.prop('disabled', false);
 
-                            window.location.reload();
+                            // window.location.reload();
                         }
                     },
                     error: function(xhr, status, error) {
