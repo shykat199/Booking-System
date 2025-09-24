@@ -6,105 +6,93 @@
         <div class="container my-5">
             <div class="row">
                 <div class="col-md-8">
-                    <article id="blog-content">
-                        <!-- Blog content will be dynamically loaded here -->
+                    <article id="blog-content" class="card shadow-sm border-0">
+
+                        {{-- Image Slider --}}
+                        @if($post->images->count())
+                            <div id="blogCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach($post->images as $key => $image)
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            @php
+                                                $imagePath = getBlogImage($image->image);
+                                            @endphp
+                                            <img src="{{ $imagePath }}" class="d-block w-100" alt="Blog Image {{ $key+1 }}">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#blogCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#blogCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        @endif
+
+                        <div class="card-body mt-3">
+                            <h2 class="card-title mb-2">{{ $post->title }}</h2>
+                            <small class="text-muted mb-3 d-block">Posted on {{ $post->created_at->format('F d, Y') }}</small>
+                            <p class="card-text">{!! nl2br(e($post->description)) !!}</p>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-start align-items-center bg-white border-0">
+                            <button class="{{Auth::user() ? 'likebtn' : ''}} btn btn-outline-danger btn-sm me-2 {{ $post->liked_by_user ? 'liked' : '' }}"
+                                @if(Auth::guest())
+                                    onclick="openLoginModal()"
+                                @else
+                                    data-post-id="{{ $post->id }}"
+                                @endif
+                            >
+                                <i class="fas fa-heart"></i> <span class="like-count">{{$post->like_count}}</span>
+                            </button>
+
+                            <button class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
+                                @if(Auth::guest())
+                                    onclick="openLoginModal()"
+                                @else
+                                    data-post-id="{{ $post->id }}"
+                                @endif
+                            >
+                                <i class="fas fa-thumbs-down"></i> <span class="unlike-count">{{$post->unlike_count}}</span>
+                            </button>
+                        </div>
+
                     </article>
-
-                    <!-- Comments Section -->
-                    <div class="mt-5">
-                        <h4>Comments</h4>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <img src="https://ui-avatars.com/api/?name=John+Smith&size=50"
-                                         class="rounded-circle me-3" alt="User">
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1">John Smith</h6>
-                                        <small class="text-muted">2 hours ago</small>
-                                        <p class="mt-2">Great article! Very helpful for beginners like me. Thanks for
-                                            sharing!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <img src="https://ui-avatars.com/api/?name=Alice+Johnson&size=50"
-                                         class="rounded-circle me-3" alt="User">
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1">Alice Johnson</h6>
-                                        <small class="text-muted">5 hours ago</small>
-                                        <p class="mt-2">I learned so much from this post. Looking forward to more
-                                            content like this.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Add Comment Form -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Leave a Comment</h5>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="commentName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="commentName" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="commentEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="commentEmail" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="commentText" class="form-label">Comment</label>
-                                        <textarea class="form-control" id="commentText" rows="4" required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Post Comment</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Sidebar for Blog Details -->
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Related Posts</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <h6><a href="#" class="text-decoration-none">Advanced JavaScript Concepts</a></h6>
-                                <small class="text-muted">March 20, 2024</small>
-                            </div>
-                            <div class="mb-3">
-                                <h6><a href="#" class="text-decoration-none">CSS Flexbox Complete Guide</a></h6>
-                                <small class="text-muted">March 18, 2024</small>
-                            </div>
-                            <div class="mb-3">
-                                <h6><a href="#" class="text-decoration-none">React Hooks Explained</a></h6>
-                                <small class="text-muted">March 16, 2024</small>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h5>Related Posts</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <h6><a href="#" class="text-decoration-none">Advanced JavaScript Concepts</a></h6>--}}
+{{--                                <small class="text-muted">March 20, 2024</small>--}}
+{{--                            </div>--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <h6><a href="#" class="text-decoration-none">CSS Flexbox Complete Guide</a></h6>--}}
+{{--                                <small class="text-muted">March 18, 2024</small>--}}
+{{--                            </div>--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <h6><a href="#" class="text-decoration-none">React Hooks Explained</a></h6>--}}
+{{--                                <small class="text-muted">March 16, 2024</small>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="card mt-4">
                         <div class="card-header">
                             <h5>Author Info</h5>
                         </div>
                         <div class="card-body text-center">
-                            <img src="https://ui-avatars.com/api/?name=John+Doe&size=100" class="rounded-circle mb-3"
-                                 alt="Author">
-                            <h5>John Doe</h5>
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}" class="rounded-circle mb-3" alt="{{$post->user->name}}">
+                            <h5>{{$post->user->name}}</h5>
                             <p class="text-muted">Full Stack Developer & Tech Blogger</p>
-                            <div class="d-flex justify-content-center gap-3">
-                                <a href="#" class="text-primary"><i class="fab fa-twitter fa-lg"></i></a>
-                                <a href="#" class="text-primary"><i class="fab fa-linkedin fa-lg"></i></a>
-                                <a href="#" class="text-primary"><i class="fab fa-github fa-lg"></i></a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,3 +101,47 @@
     </div>
 
 @endsection
+@push('frontend.script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            function sendAction(postId, action, button) {
+                fetch("{{ route('post.action') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ post_id: postId, action: action })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        const likeBtn = document.querySelector(`.likebtn[data-post-id="${postId}"]`);
+                        const unlikeBtn = document.querySelector(`.unlikebtn[data-post-id="${postId}"]`);
+
+                        likeBtn.querySelector('.like-count').textContent = data.like_count;
+                        unlikeBtn.querySelector('.unlike-count').textContent = data.unlike_count;
+
+                        likeBtn.classList.toggle('liked', data.liked_by_user);
+                        unlikeBtn.classList.toggle('unliked', data.unliked_by_user);
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            document.querySelectorAll('.likebtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-post-id');
+                    sendAction(postId, 'like', this);
+                });
+            });
+
+            document.querySelectorAll('.unlikebtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-post-id');
+                    sendAction(postId, 'unlike', this);
+                });
+            });
+
+        });
+    </script>
+@endpush
