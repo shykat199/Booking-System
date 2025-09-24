@@ -9,6 +9,10 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Frontend\FrontendHomeController;
 use App\Http\Controllers\Frontend\BlogListController;
 use App\Http\Controllers\Frontend\BlogDetailsController;
+use App\Http\Controllers\SocialLoginController;
+
+Route::get('login/{provider}', [SocialLoginController::class, 'redirectToProvider'])->name('login.provider');
+Route::get('login/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback']);
 
 Route::controller(FrontendHomeController::class)->group(function () {
     route::get('/', 'index')->name('home-page');
