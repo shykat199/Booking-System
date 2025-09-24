@@ -14,6 +14,21 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="sidebar-list {{ request()->routeIs(['blog','create-blog','save-blog','update-blog','delete-blog']) ? 'active' : '' }}">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h6>Blog List</h6>
+                </a>
+                <ul class="sidebar-submenu" style="display: {{ request()->routeIs(['blog','create-blog','save-blog','edit-blog']) ? 'block' : 'none' }};">
+                    <li>
+                        <a class="{{ request()->routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog List</a>
+                    </li>
+                    <li>
+                        <a class="{{ request()->routeIs('create-blog') ? 'active' : '' }}" href="{{ route('create-blog') }}">Create Blog</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
