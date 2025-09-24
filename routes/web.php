@@ -12,7 +12,7 @@ use App\Http\Controllers\Frontend\BlogDetailsController;
 
 Route::controller(FrontendHomeController::class)->group(function () {
     route::get('/', 'index')->name('home-page');
-    route::get('/login-page', 'loginPage')->name('login-page');
+    Route::get('/load-more-posts', 'loadMorePosts')->name('load-more-posts');
 });
 
 Route::controller(BlogListController::class)->group(function () {
@@ -21,6 +21,10 @@ Route::controller(BlogListController::class)->group(function () {
 
 Route::controller(BlogDetailsController::class)->group(function () {
     route::get('blog-details/{slug}', 'index')->name('blog-details');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/post-action', [BlogListController::class, 'toggle'])->name('post.action');
 });
 
 Route::controller(AuthController::class)->group(function () {

@@ -1,9 +1,17 @@
 @extends('frontend.layouts.app')
 
+@push('frontend.style')
+    <style>
+        #loadingSpinner {
+            margin-top: 10px;
+        }
+    </style>
+@endpush
+
 @section('frontend.content')
-    <!-- Home Page -->
+
     <div id="home-page" class="page">
-        <!-- Hero Carousel -->
+
         <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -41,138 +49,98 @@
             </button>
         </div>
 
-        <!-- Featured Posts Section -->
         <div class="container my-5">
             <h2 class="text-center mb-4">Featured Posts</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="Web Development">
-                        <div class="card-body">
-                            <h5 class="card-title">Getting Started with Web Development</h5>
-                            <p class="card-text">Learn the fundamentals of web development including HTML, CSS, and JavaScript.</p>
-                            <small class="text-muted">Posted on March 15, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="1">
-                                        <i class="fas fa-heart"></i> <span class="like-count">24</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="1">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">2</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(1)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="Data Analysis">
-                        <div class="card-body">
-                            <h5 class="card-title">Data Analysis with Python</h5>
-                            <p class="card-text">Explore powerful data analysis techniques using Python libraries like Pandas and NumPy.</p>
-                            <small class="text-muted">Posted on March 12, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="2">
-                                        <i class="fas fa-heart"></i> <span class="like-count">18</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="2">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">1</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(2)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="Mobile Development">
-                        <div class="card-body">
-                            <h5 class="card-title">Mobile App Development Trends</h5>
-                            <p class="card-text">Discover the latest trends and technologies in mobile app development for 2024.</p>
-                            <small class="text-muted">Posted on March 10, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="3">
-                                        <i class="fas fa-heart"></i> <span class="like-count">32</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="3">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">0</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(3)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="AI Technology">
-                        <div class="card-body">
-                            <h5 class="card-title">Artificial Intelligence in 2024</h5>
-                            <p class="card-text">How AI is transforming industries and creating new opportunities for developers.</p>
-                            <small class="text-muted">Posted on March 8, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="4">
-                                        <i class="fas fa-heart"></i> <span class="like-count">45</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="4">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">3</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(4)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="Digital Marketing">
-                        <div class="card-body">
-                            <h5 class="card-title">Digital Marketing Strategies</h5>
-                            <p class="card-text">Effective digital marketing strategies to grow your online presence.</p>
-                            <small class="text-muted">Posted on March 5, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="5">
-                                        <i class="fas fa-heart"></i> <span class="like-count">27</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="5">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">1</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(5)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card post-card h-100">
-                        <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200" class="card-img-top post-img" alt="Cloud Computing">
-                        <div class="card-body">
-                            <h5 class="card-title">Cloud Computing Essentials</h5>
-                            <p class="card-text">Understanding cloud computing services and their benefits for modern businesses.</p>
-                            <small class="text-muted">Posted on March 3, 2024</small>
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <button class="like-btn me-2" onclick="toggleLike(this)" data-post-id="6">
-                                        <i class="fas fa-heart"></i> <span class="like-count">19</span>
-                                    </button>
-                                    <button class="unlike-btn" onclick="toggleUnlike(this)" data-post-id="6">
-                                        <i class="fas fa-thumbs-down"></i> <span class="unlike-count">0</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-primary btn-sm" onclick="showPostDetails(6)">Read More</button>
-                            </div>
-                        </div>
-                    </div>
+
+            <div id="postsContainer" class="row g-4">
+                @include('partials.post-card', ['posts' => $latestPosts])
+            </div>
+
+            <div class="col-12 text-center mt-4" id="loadMoreContainer">
+                <button id="loadMoreBtn" class="btn btn-outline-primary btn-sm px-4" onclick="loadMorePosts()">
+                    Load More
+                </button>
+                <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
+                    <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('frontend.script')
+    <script>
+        let page = 1;
+        const perPage = `{{count($latestPosts)}}`;
+
+        function loadMorePosts() {
+            page++;
+            const loadBtn = document.getElementById('loadMoreBtn');
+            const spinner = document.getElementById('loadingSpinner');
+
+            loadBtn.classList.add('d-none');
+            spinner.classList.remove('d-none');
+
+            fetch(`/load-more-posts?page=${page}&per_page=${perPage}`)
+                .then(res => res.text())
+                .then(html => {
+                    if (html.trim().length === 0) {
+                        document.getElementById('loadMoreContainer').innerHTML = '<p>No more posts</p>';
+                    } else {
+                        document.getElementById('postsContainer').insertAdjacentHTML('beforeend', html);
+                        loadBtn.classList.remove('d-none');
+
+                        function sendAction(postId, action, button) {
+                            fetch("{{ route('post.action') }}", {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({ post_id: postId, action: action })
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    const likeBtn = document.querySelector(`.likebtn[data-post-id="${postId}"]`);
+                                    const unlikeBtn = document.querySelector(`.unlikebtn[data-post-id="${postId}"]`);
+
+                                    likeBtn.querySelector('.like-count').textContent = data.like_count;
+                                    unlikeBtn.querySelector('.unlike-count').textContent = data.unlike_count;
+
+                                    likeBtn.classList.toggle('liked', data.liked_by_user);
+                                    unlikeBtn.classList.toggle('unliked', data.unliked_by_user);
+                                })
+                                .catch(err => console.error(err));
+                        }
+
+                        document.querySelectorAll('.likebtn').forEach(btn => {
+                            btn.addEventListener('click', function() {
+                                const postId = this.getAttribute('data-post-id');
+                                sendAction(postId, 'like', this);
+                            });
+                        });
+
+                        document.querySelectorAll('.unlikebtn').forEach(btn => {
+                            btn.addEventListener('click', function() {
+                                const postId = this.getAttribute('data-post-id');
+                                sendAction(postId, 'unlike', this);
+                            });
+                        });
+
+                    }
+                })
+                .catch(err => console.error(err))
+                .finally(() => spinner.classList.add('d-none'));
+        }
+
+    </script>
+
+    <script>
+        function openLoginModal() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        }
+    </script>
+
+@endpush
 

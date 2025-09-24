@@ -11,4 +11,14 @@ class BlogDetailsController extends Controller
     {
         return view('frontend.blog-details');
     }
+
+    public function like($id)
+    {
+
+    }
+
+    public function dislike($id)
+    {
+
+    }
 }

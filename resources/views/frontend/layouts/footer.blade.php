@@ -14,8 +14,8 @@
             <div class="col-md-4">
                 <h5>Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-light text-decoration-none" onclick="showPage('home')">Home</a></li>
-                    <li><a href="#" class="text-light text-decoration-none" onclick="showPage('posts')">Posts</a></li>
+                    <li><a href="{{route('home-page')}}" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="{{route('blog-list')}}" class="text-light text-decoration-none">Posts</a></li>
                     <li><a href="#" class="text-light text-decoration-none">About</a></li>
                     <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
                 </ul>
