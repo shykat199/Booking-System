@@ -8,7 +8,7 @@
     <meta name="description" content="Task Management"/>
     <meta name="keywords" content="Task Management"/>
     <meta name="author" content="Task Management"/>
-    <title>{{config('app.name')}}</title>
+    <title>@yield('page-title')</title>
     <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon"/>
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon"/>
 
@@ -30,10 +30,15 @@
     <link id="color" rel="stylesheet" href="{{asset('assets/css/color-1.css')}}" media="screen"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.23.0/sweetalert2.css" integrity="sha512-/j+6zx45kh/MDjnlYQL0wjxn+aPaSkaoTczyOGfw64OB2CHR7Uh5v1AML7VUybUnUTscY5ck/gbGygWYcpCA7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{--    <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap5.css')}}">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
     @stack('style')
 </head>
 <body>
+@include('sweetalert::alert')
 <!-- page-wrapper Start-->
 
 <!-- loader-->
@@ -48,8 +53,10 @@
         <!-- Page sidebar start-->
         @include('layouts.side-bar')
         <!-- Page sidebar end-->
-        @section('content')
-        @show
+        <div class="page-body">
+            @section('content')
+            @show
+        </div>
 
         @include('layouts.footer')
 
@@ -90,7 +97,15 @@
 <!-- custom script -->
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.23.0/sweetalert2.min.js" integrity="sha512-pnPZhx5S+z5FSVwy62gcyG2Mun8h6R+PG01MidzU+NGF06/ytcm2r6+AaWMBXAnDHsdHWtsxS0dH8FBKA84FlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="{{asset('assets/js/dataTables.js')}}"></script>
+<script src="{{asset('assets/js/dataTables.bootstrap5.js')}}"></script>
+<script src="{{asset('assets/js/data-table.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{--<script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>--}}
+{{--<!-- page_datatable-->--}}
+{{--<script src="{{asset('assets/js/js-datatables/datatables/datatable.custom.js')}}"></script>--}}
+{{--<!-- page_datatable-->--}}
+{{--<script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>--}}
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
