@@ -74,7 +74,7 @@
                             <li class="d-flex">
                                 <svg class="svg-color">
                                     <use href="../assets/svg/iconly-sprite.svg#Document"></use>
-                                </svg><a class="ms-2" href="to-do.html">Task</a>
+                                </svg><a class="ms-2" href="{{route('home-page')}}">Go To Home</a>
                             </li>
                             <li class="d-flex">
                                 <svg class="svg-color">

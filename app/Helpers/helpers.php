@@ -24,3 +24,15 @@ function formatDate($date, string $format = 'd-M-Y H:i:s'): string
 {
     return \Illuminate\Support\Carbon::parse($date)->format($format);
 }
+
+function getBlogImage($imagePath)
+{
+
+    $imageUrl = 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200';
+
+    if ($imagePath && file_exists(storage_path('app/public/' . $imagePath))) {
+        $imageUrl = asset('storage/' . $imagePath);
+    }
+
+    return $imageUrl;
+}

@@ -106,6 +106,77 @@
 
 @include('frontend.layouts.footer')
 
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Your form goes here -->
+                <div class="auth-container">
+                    <div class="card auth-card border-0 shadow-none">
+                        <div class="card-body p-3">
+                            <div class="text-center mb-4">
+                                <h2><i class="fas fa-blog text-primary"></i> My Blog</h2>
+                                <p class="text-muted">Welcome back! Please sign in to your account</p>
+                            </div>
+
+                            <form id="loginForm" action="{{route('login.store')}}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                                            <i class="fas fa-eye" id="toggleIcon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 mb-3">
+                                    <i class="fas fa-sign-in-alt"></i> Sign In
+                                </button>
+                            </form>
+
+                            <div class="text-center mb-3">
+                                <small class="text-muted">── Or continue with ──</small>
+                            </div>
+
+                            <!-- Social Login Buttons -->
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button class="btn btn-outline-primary social-btn facebook text-white w-100">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-outline-danger social-btn google text-white w-100">
+                                        <i class="fab fa-google"></i> Google
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 @stack('frontend.script')
 <script>
@@ -201,81 +272,6 @@
         }
     };
 
-    // User interactions storage
-    let userLikes = {};
-    let userUnlikes = {};
-
-    // Show post details
-    function showPostDetails(postId) {
-        const post = postsData[postId];
-        if (post) {
-            document.getElementById('blog-content').innerHTML = post.content;
-            showPage('blog-details');
-        }
-    }
-
-    // Like functionality
-    function toggleLike(button) {
-        const postId = button.getAttribute('data-post-id');
-        const likeCountSpan = button.querySelector('.like-count');
-        const currentCount = parseInt(likeCountSpan.textContent);
-
-        if (userLikes[postId]) {
-            // Unlike
-            userLikes[postId] = false;
-            likeCountSpan.textContent = currentCount - 1;
-            button.classList.remove('liked');
-        } else {
-            // Like
-            userLikes[postId] = true;
-            likeCountSpan.textContent = currentCount + 1;
-            button.classList.add('liked');
-
-            // Remove unlike if it exists
-            if (userUnlikes[postId]) {
-                const unlikeBtn = document.querySelector(`[data-post-id="${postId}"].unlike-btn`);
-                if (unlikeBtn) {
-                    const unlikeCountSpan = unlikeBtn.querySelector('.unlike-count');
-                    const unlikeCount = parseInt(unlikeCountSpan.textContent);
-                    unlikeCountSpan.textContent = unlikeCount - 1;
-                    unlikeBtn.classList.remove('unliked');
-                    userUnlikes[postId] = false;
-                }
-            }
-        }
-    }
-
-    // Unlike functionality
-    function toggleUnlike(button) {
-        const postId = button.getAttribute('data-post-id');
-        const unlikeCountSpan = button.querySelector('.unlike-count');
-        const currentCount = parseInt(unlikeCountSpan.textContent);
-
-        if (userUnlikes[postId]) {
-            // Remove unlike
-            userUnlikes[postId] = false;
-            unlikeCountSpan.textContent = currentCount - 1;
-            button.classList.remove('unliked');
-        } else {
-            // Unlike
-            userUnlikes[postId] = true;
-            unlikeCountSpan.textContent = currentCount + 1;
-            button.classList.add('unliked');
-
-            // Remove like if it exists
-            if (userLikes[postId]) {
-                const likeBtn = document.querySelector(`[data-post-id="${postId}"].like-btn`);
-                if (likeBtn) {
-                    const likeCountSpan = likeBtn.querySelector('.like-count');
-                    const likeCount = parseInt(likeCountSpan.textContent);
-                    likeCountSpan.textContent = likeCount - 1;
-                    likeBtn.classList.remove('liked');
-                    userLikes[postId] = false;
-                }
-            }
-        }
-    }
-
     // Live search functionality
     function liveSearch() {
         const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -353,42 +349,18 @@
     }
 
     // Hide search results when clicking outside
-    document.addEventListener('click', function(e) {
-        const searchResults = document.getElementById('searchResults');
-        const searchInput = document.getElementById('searchInput');
-
-        if (!searchResults.contains(e.target) && e.target !== searchInput) {
-            searchResults.style.display = 'none';
-        }
-    });
-
-    // Authentication functions
-    function showLogin() {
-        showPage('login');
-    }
-
-    function showSignup() {
-        showPage('signup');
-    }
+    // document.addEventListener('click', function(e) {
+    //     const searchResults = document.getElementById('searchResults');
+    //     const searchInput = document.getElementById('searchInput');
+    //
+    //     if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    //         searchResults.style.display = 'none';
+    //     }
+    // });
 
     function togglePassword() {
         const passwordInput = document.getElementById('password');
         const toggleIcon = document.getElementById('toggleIcon');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.classList.remove('fa-eye-slash');
-            toggleIcon.classList.add('fa-eye');
-        }
-    }
-
-    function toggleSignupPassword() {
-        const passwordInput = document.getElementById('signupPassword');
-        const toggleIcon = document.getElementById('toggleSignupIcon');
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
@@ -417,6 +389,49 @@
             interval: 5000,
             wrap: true
         });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        function sendAction(postId, action, button) {
+            fetch("{{ route('post.action') }}", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ post_id: postId, action: action })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    const likeBtn = document.querySelector(`.likebtn[data-post-id="${postId}"]`);
+                    const unlikeBtn = document.querySelector(`.unlikebtn[data-post-id="${postId}"]`);
+
+                    likeBtn.querySelector('.like-count').textContent = data.like_count;
+                    unlikeBtn.querySelector('.unlike-count').textContent = data.unlike_count;
+
+                    likeBtn.classList.toggle('liked', data.liked_by_user);
+                    unlikeBtn.classList.toggle('unliked', data.unliked_by_user);
+                })
+                .catch(err => console.error(err));
+        }
+
+        document.querySelectorAll('.likebtn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+                sendAction(postId, 'like', this);
+            });
+        });
+
+        document.querySelectorAll('.unlikebtn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postId = this.getAttribute('data-post-id');
+                sendAction(postId, 'unlike', this);
+            });
+        });
+
     });
 </script>
 </body>
