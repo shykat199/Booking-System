@@ -34,6 +34,7 @@
     @stack('style')
 </head>
 <body>
+@include('sweetalert::alert')
 <!-- page-wrapper Start-->
 
 <!-- loader-->
