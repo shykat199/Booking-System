@@ -155,20 +155,22 @@
                                 <small class="text-muted">── Or continue with ──</small>
                             </div>
 
-                            <!-- Social Login Buttons -->
+
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <button class="btn btn-outline-primary social-btn facebook text-white w-100">
+                                    <a href="{{ route('login.provider', 'facebook') }}"
+                                       class="btn btn-outline-primary social-btn facebook text-white w-100">
                                         <i class="fab fa-facebook-f"></i> Facebook
-                                    </button>
+                                    </a>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-outline-danger social-btn google text-white w-100">
-                                        <i class="fab fa-google"></i> Google
-                                    </button>
-                                </div>
+                                        <a href="{{ route('login.provider', 'google') }}"
+                                           class="btn btn-outline-danger social-btn google text-white w-100">
+                                            <i class="fab fa-google"></i> Google
+                                        </a>
+                                    </div>
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
