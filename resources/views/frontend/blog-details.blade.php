@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-
+@section('front-end-page.title','Blog Details')
 @section('frontend.content')
 
     <div id="blog-details-page" class="page">

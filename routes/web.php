@@ -17,6 +17,7 @@ Route::controller(FrontendHomeController::class)->group(function () {
 
 Route::controller(BlogListController::class)->group(function () {
     route::get('blog-list', 'index')->name('blog-list');
+    Route::get('/posts/search', 'search')->name('posts.search');
 });
 
 Route::controller(BlogDetailsController::class)->group(function () {

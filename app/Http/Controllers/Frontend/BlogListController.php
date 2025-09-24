@@ -10,13 +10,21 @@ use Illuminate\Http\Request;
 
 class BlogListController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $userId = auth()->id();
-        $data['posts'] = Blog::withCount([
+        $posts = Blog::withCount([
             'likes as like_count',
             'unlikes as unlike_count'
-        ])->with('firstImage','user')->latest()->paginate(10);
+        ])->with('firstImage','user');
+            if ($request->get('search')) {
+                $search = $request->get('search');
+                $posts = $posts->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', "%{$search}%");
+            }
+        $posts = $posts->latest()->paginate(10);
+
+        $data['posts']=$posts;
 
         $userActions = [];
         if ($userId) {
@@ -81,4 +89,17 @@ class BlogListController extends Controller
             'unliked_by_user' => $action === 'unlike',
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $posts = Blog::where('title', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%")
+            ->limit(5)
+            ->get(['title', 'slug', 'description']);
+
+        return response()->json($posts);
+    }
+
 }
