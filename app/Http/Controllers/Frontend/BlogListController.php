@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\PostAction;
 use DB;
 use Illuminate\Http\Request;
@@ -11,7 +12,26 @@ class BlogListController extends Controller
 {
     public function index()
     {
-        return view('frontend.blog-list');
+        $userId = auth()->id();
+        $data['posts'] = Blog::withCount([
+            'likes as like_count',
+            'unlikes as unlike_count'
+        ])->with('firstImage','user')->latest()->paginate(10);
+
+        $userActions = [];
+        if ($userId) {
+            $postIds = $data['posts']->pluck('id')->toArray();
+            $userActions = \App\Models\PostAction::where('user_id', $userId)
+                ->whereIn('post_id', $postIds)
+                ->pluck('action_status', 'post_id')
+                ->toArray();
+        }
+
+        $data['posts']->each(function ($post) use ($userActions) {
+            $post->liked_by_user = isset($userActions[$post->id]) && $userActions[$post->id] == BLOG_LIKE_STATUS;
+            $post->unliked_by_user = isset($userActions[$post->id]) && $userActions[$post->id] == BLOG_UNLIKE_STATUS;
+        });
+        return view('frontend.blog-list', $data);
     }
 
     public function toggle(Request $request)

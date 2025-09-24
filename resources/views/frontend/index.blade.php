@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-
+@section('front-end-page.title','Home')
 @push('frontend.style')
     <style>
         #loadingSpinner {
