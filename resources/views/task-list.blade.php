@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('page-title','Task List')
+
 @push('style')
     <style>
         :root {
