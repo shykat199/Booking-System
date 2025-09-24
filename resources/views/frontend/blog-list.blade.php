@@ -30,6 +30,19 @@
             border-color: #dee2e6;
             color: #6c757d;
         }
+
+        #searchResults a {
+            transition: background-color 0.2s ease;
+        }
+
+        #searchResults a:hover {
+            background-color: #f0f0f0;
+        }
+
+        #searchResults p {
+            font-size: 0.9rem;
+            color: #555;
+        }
     </style>
 @endpush
 @section('frontend.content')
@@ -40,15 +53,16 @@
                 <div class="col-md-8">
                     <h2>All Blogs</h2>
 
-                    <!-- Search Bar with Live Results -->
                     <div class="mb-4 position-relative">
-                        <div class="input-group">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Search posts..." oninput="liveSearch()">
-                            <button class="btn btn-primary" type="button" onclick="searchPosts()">
-                                <i class="fas fa-search"></i> Search
-                            </button>
-                        </div>
-                        <div id="searchResults" class="search-results position-absolute w-100 mt-1" style="display: none;"></div>
+                        <form action="{{route('blog-list')}}" method="get">
+                            <div class="input-group">
+                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search posts..." oninput="liveSearch()">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                        </form>
+                        <div id="searchResults" class="search-results position-absolute w-100 mt-1 bg-white shadow-sm rounded" style="display: none; max-height: 300px; overflow-y: auto; z-index: 1000;"></div>
                     </div>
 
                     <!-- Posts List -->
@@ -99,3 +113,42 @@
     </div>
 
 @endsection
+@push('frontend.style')
+    <script>
+        function liveSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            const resultsDiv = document.getElementById('searchResults');
+
+            if (query.length < 2) {
+                resultsDiv.style.display = 'none';
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            fetch("{{ route('posts.search') }}?query=" + encodeURIComponent(query))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        resultsDiv.innerHTML = '<div class="p-2 text-muted">No posts found</div>';
+                    } else {
+                        resultsDiv.innerHTML = data.map(post => `
+                        <a href="/blog-details/${post.slug}" class="d-block text-decoration-none text-dark p-2 border-bottom">
+                            <strong>${post.title}</strong>
+                            <p class="mb-0 text-truncate">${post.description}</p>
+                        </a>
+                    `).join('');
+                    }
+                    resultsDiv.style.display = 'block';
+                })
+                .catch(err => console.error(err));
+        }
+
+        document.addEventListener('click', function(e){
+            const resultsDiv = document.getElementById('searchResults');
+            const searchInput = document.getElementById('searchInput');
+            if (!resultsDiv.contains(e.target) && e.target !== searchInput) {
+                resultsDiv.style.display = 'none';
+            }
+        });
+    </script>
+@endpush
