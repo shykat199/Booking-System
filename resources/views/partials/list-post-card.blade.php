@@ -12,8 +12,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             {{-- Like Button --}}
-                            <button
-                                class="{{Auth::user() ? 'likebtn' : ''}} btn btn-outline-danger btn-sm me-2 {{ $post->liked_by_user ? 'liked' : '' }}"
+                            <button class="{{Auth::user() ? 'likebtn' : ''}} btn btn-outline-danger btn-sm me-2 {{ $post->liked_by_user ? 'liked' : '' }}"
                                 @if(Auth::guest())
                                     onclick="openLoginModal()"
                                 @else
@@ -24,8 +23,7 @@
                             </button>
 
                             {{-- Unlike Button --}}
-                            <button
-                                class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
+                            <button class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
                                 @if(Auth::guest())
                                     onclick="openLoginModal()"
                                 @else
