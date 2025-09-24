@@ -6,6 +6,23 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
 
+use App\Http\Controllers\Frontend\FrontendHomeController;
+use App\Http\Controllers\Frontend\BlogListController;
+use App\Http\Controllers\Frontend\BlogDetailsController;
+
+Route::controller(FrontendHomeController::class)->group(function () {
+    route::get('/', 'index')->name('home-page');
+    route::get('/login-page', 'loginPage')->name('login-page');
+});
+
+Route::controller(BlogListController::class)->group(function () {
+    route::get('blog-list', 'index')->name('blog-list');
+});
+
+Route::controller(BlogDetailsController::class)->group(function () {
+    route::get('blog-details/{slug}', 'index')->name('blog-details');
+});
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'create')->name('login');
 });
@@ -21,7 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/tasks/{task}/delete', 'destroy')->name('delete-tasks');
     });
 
-    Route::controller(BlogController::class)->group(function () {
+    Route::controller(BlogController::class)->prefix('admin/')->group(function () {
         Route::get('/blog-list', 'index')->name('blog');
         Route::get('/create-blog', 'create')->name('create-blog');
         Route::get('/edit-blog/{blog:slug}', 'edit')->name('edit-blog');
