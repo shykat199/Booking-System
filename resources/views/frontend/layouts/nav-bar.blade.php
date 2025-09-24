@@ -7,10 +7,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('home-page')}}">Home</a>
+                    <a class="nav-link {{request()->routeIs('home-page') ? 'active' : ''}}" href="{{route('home-page')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('blog-list')}}">Posts</a>
+                    <a class="nav-link {{request()->routeIs('blog-list') ? 'active' : ''}}" href="{{route('blog-list')}}">Posts</a>
                 </li>
             </ul>
             <ul class="navbar-nav">

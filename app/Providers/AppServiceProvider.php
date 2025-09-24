@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        Paginator::useBootstrap();
         DB::statement("SET time_zone = '+06:00'");
         if ($this->app->environment('production')){
             URL::forceScheme('https');

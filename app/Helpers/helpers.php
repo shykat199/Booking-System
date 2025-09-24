@@ -36,3 +36,8 @@ function getBlogImage($imagePath)
 
     return $imageUrl;
 }
+
+function recentPosts($limit = 5)
+{
+    return \App\Models\Blog::latest()->limit($limit)->get();
+}
