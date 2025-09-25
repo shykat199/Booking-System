@@ -92,7 +92,7 @@
                                 <select id="author" name="author" class="form-control select2">
                                     <option value="">Select Author</option>
                                     @foreach($authors as $author)
-                                        <option value="{{ $author->id }}" {{ old('author', $blog->user_id ?? '') == $author->id ? 'selected' : '' }}>
+                                        <option value="{{ $author->id }}" {{ old('author', $blog->user_id ?? '') == $author->id ? 'selected' : (auth()->user()->id == $author->id ? 'selected':'') }}>
                                             {{ $author->name }}
                                         </option>
                                     @endforeach
