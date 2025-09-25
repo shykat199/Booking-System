@@ -158,9 +158,9 @@
 
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <a href="{{ route('login.provider', 'facebook') }}"
-                                       class="btn btn-outline-primary social-btn facebook text-white w-100">
-                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    <a href="{{ route('login.provider', 'github') }}"
+                                       class="btn btn-outline-primary github text-white w-100">
+                                        <i class="fab fa-github"></i> Git Hub
                                     </a>
                                 </div>
                                 <div class="col-6">
