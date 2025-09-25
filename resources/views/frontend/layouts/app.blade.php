@@ -118,7 +118,6 @@
             </div>
 
             <div class="modal-body">
-                <!-- Your form goes here -->
                 <div class="auth-container">
                     <div class="card auth-card border-0 shadow-none">
                         <div class="card-body p-3">
@@ -172,9 +171,9 @@
                             </div>
 
                     </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
