@@ -131,12 +131,18 @@
                     if (data.length === 0) {
                         resultsDiv.innerHTML = '<div class="p-2 text-muted">No posts found</div>';
                     } else {
-                        resultsDiv.innerHTML = data.map(post => `
-                        <a href="/blog-details/${post.slug}" class="d-block text-decoration-none text-dark p-2 border-bottom">
-                            <strong>${post.title}</strong>
-                            <p class="mb-0 text-truncate">${post.description}</p>
-                        </a>
-                    `).join('');
+                        resultsDiv.innerHTML = data.map(post => {
+                            const truncatedDesc = post.description.length > 150
+                                ? post.description.slice(0, 150) + '...'
+                                : post.description;
+
+                            return `
+                            <a href="/blog-details/${post.slug}" class="d-block text-decoration-none text-dark p-2 border-bottom">
+                                <strong>${post.title}</strong>
+                                <p class="mb-0 text-truncate">${truncatedDesc}</p>
+                            </a>
+                        `;
+                        }).join('');
                     }
                     resultsDiv.style.display = 'block';
                 })
