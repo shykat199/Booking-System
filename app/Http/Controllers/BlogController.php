@@ -21,7 +21,7 @@ class BlogController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Blog::with('user','images')->latest();
+            $data = Blog::with('user','images')->where('user_id',auth()->user()->id)->latest();
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('edit-blog', $row->slug);
