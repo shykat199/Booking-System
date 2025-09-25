@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('page-title','Dashboard')
 
 @section('content')
     <div class="page-body">
@@ -33,7 +34,7 @@
                                 <h1>Hello, Dear  <img src="{{asset('assets/images/dashboard-1/hand.png')}}" alt=""/></h1>
                             </div>
                             <p> Welcome back! Let’s start from where you left.</p>
-                            <div class="d-flex align-center justify-content-between"><a class="btn btn-pill btn-primary" href="#">Whats New!</a><span>
+                            <div class="d-flex align-center justify-content-between"><a class="btn btn-pill btn-primary" href="{{route('home-page')}}">Go To Home !</a><span>
                         <svg class="stroke-icon">
                           <use href="../assets/svg/icon-sprite.svg#watch"></use>
                         </svg> {{\Carbon\Carbon::now()->format('H:i a')}}</span>
