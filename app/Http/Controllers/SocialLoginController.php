@@ -28,6 +28,7 @@ class SocialLoginController extends Controller
                 'email' => $socialUser->getEmail(),
                 'provider_name' => $provider,
                 'provider_id' => $socialUser->getId(),
+                'status' => ACTIVE_STATUS,
                 'password' => bcrypt(uniqid('', true)),
             ]);
         }
