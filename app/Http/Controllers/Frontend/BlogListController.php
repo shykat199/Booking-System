@@ -73,7 +73,6 @@ class BlogListController extends Controller
             ]);
         }
 
-        // Get updated counts
         $postCounts = PostAction::select('action_status', DB::raw('count(*) as total'))
             ->where('post_id', $postId)
             ->groupBy('action_status')
