@@ -27,4 +27,26 @@ class Blog extends Model
     {
         return $this->hasMany(BlogImage::class,'blog_id','id');
     }
+
+    public function firstImage()
+    {
+        return $this->hasOne(BlogImage::class, 'blog_id')->select('id', 'blog_id', 'image');
+    }
+
+    public function postActions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostAction::class, 'post_id','id');
+    }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->postActions()->where('action_status', BLOG_LIKE_STATUS);
+    }
+
+    public function unlikes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->postActions()->where('action_status', BLOG_UNLIKE_STATUS);
+    }
+
+
 }
