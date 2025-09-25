@@ -150,5 +150,10 @@
                 resultsDiv.style.display = 'none';
             }
         });
+
+        function openLoginModal() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        }
     </script>
 @endpush

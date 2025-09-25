@@ -104,11 +104,40 @@
                                     const likeBtn = document.querySelector(`.likebtn[data-post-id="${postId}"]`);
                                     const unlikeBtn = document.querySelector(`.unlikebtn[data-post-id="${postId}"]`);
 
+                                    const likeIcon = likeBtn.querySelector('i');
+                                    const unlikeIcon = unlikeBtn.querySelector('i');
+
                                     likeBtn.querySelector('.like-count').textContent = data.like_count;
                                     unlikeBtn.querySelector('.unlike-count').textContent = data.unlike_count;
 
-                                    likeBtn.classList.toggle('liked', data.liked_by_user);
-                                    unlikeBtn.classList.toggle('unliked', data.unliked_by_user);
+                                    if(action === 'like') {
+                                        if(data.liked_by_user) {
+                                            likeBtn.classList.add('liked');
+                                            likeIcon.classList.remove('heart-outline');
+
+                                            unlikeBtn.classList.remove('unliked');
+                                            unlikeIcon.classList.remove('text-primary');
+                                            unlikeIcon.classList.add('thumbs-icon');
+                                        } else {
+                                            likeBtn.classList.remove('liked');
+                                            likeIcon.classList.add('heart-outline');
+                                        }
+                                    }
+
+                                    if(action === 'unlike') {
+                                        if(data.unliked_by_user) {
+                                            unlikeBtn.classList.add('unliked');
+                                            unlikeIcon.classList.add('text-primary');
+
+                                            likeBtn.classList.remove('liked');
+                                            likeIcon.classList.add('heart-outline');
+                                        } else {
+                                            unlikeBtn.classList.remove('unliked');
+                                            unlikeIcon.classList.remove('text-primary');
+                                            unlikeIcon.classList.add('thumbs-icon');
+                                        }
+                                    }
+
                                 })
                                 .catch(err => console.error(err));
                         }

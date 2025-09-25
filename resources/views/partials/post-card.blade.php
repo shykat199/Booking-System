@@ -9,37 +9,33 @@
                 <div class="mt-3 d-flex justify-content-between align-items-center p-2 border rounded bg-light">
 
                     <div class="d-flex align-items-center">
-                        {{-- Like Button --}}
-                        <button
-                            class="{{Auth::user() ? 'likebtn' : ''}} btn btn-outline-danger btn-sm me-2 {{ $post->liked_by_user ? 'liked' : '' }}"
+                        <button class="{{Auth::user() ? 'likebtn' : ''}} btn btn-outline-danger btn-sm me-2 {{ $post->liked_by_user ? 'liked' : '' }}"
                             @if(Auth::guest())
                                 onclick="openLoginModal()"
                             @else
                                 data-post-id="{{ $post->id }}"
                             @endif
                         >
-                            <i class="fas fa-heart"></i> <span class="like-count">{{$post->like_count}}</span>
+                            <i class="fas fa-heart {{ !$post->liked_by_user ? 'heart-outline' : '' }}"></i>
+                            <span class="like-count">{{$post->like_count}}</span>
                         </button>
 
-                        {{-- Unlike Button --}}
-                        <button
-                            class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
+                        <button class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
                             @if(Auth::guest())
                                 onclick="openLoginModal()"
                             @else
                                 data-post-id="{{ $post->id }}"
                             @endif
                         >
-                            <i class="fas fa-thumbs-down"></i> <span class="unlike-count">{{$post->unlike_count}}</span>
+                            <i class="fas fa-thumbs-down {{ $post->unliked_by_user ? 'text-primary' : '' }}"></i>
+                            <span class="unlike-count">{{$post->unlike_count}}</span>
                         </button>
                     </div>
 
-                    {{-- Read More --}}
                     <a class="btn btn-primary btn-sm" href="{{route('blog-details',$post->slug)}}">Read More</a>
 
                 </div>
 
-                {{-- Hidden button to trigger login modal --}}
                 <button id="loginModalTrigger" type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#loginModal"></button>
             </div>
         </div>
