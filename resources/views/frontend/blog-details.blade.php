@@ -35,7 +35,7 @@
                         <div class="card-body mt-3">
                             <h2 class="card-title mb-2">{{ $post->title }}</h2>
                             <small class="text-muted mb-3 d-block">Posted on {{ $post->created_at->format('F d, Y') }}</small>
-                            <p class="card-text">{!! nl2br(e($post->description)) !!}</p>
+                            <p class="card-text">{!! $post->description !!}</p>
                         </div>
 
                         <div class="card-footer d-flex justify-content-start align-items-center bg-white border-0">
