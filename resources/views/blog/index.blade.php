@@ -28,7 +28,7 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th style="width: 450px">Image</th>
-                                    <th>Status</th>
+                                    <th>Likes</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
@@ -80,7 +80,7 @@
                     {data: 'title', name: 'title'},
                     {data: 'description', name: 'description',orderable: false, searchable: false},
                     {data: 'images', name: 'images',orderable: false, searchable: false},
-                    {data: 'status', name: 'status',orderable: false, searchable: false},
+                    {data: 'likes', name: 'likes',orderable: false, searchable: false},
                     {data: 'created_at', name: 'created_at',orderable: false, searchable: false},
                     {data: 'action', name: 'action',orderable: false, searchable: false},
                 ],
@@ -89,23 +89,6 @@
                         targets: 1,
                         render: function(data, type, row, meta){
                             return row.user.name
-                        }
-                    },
-
-                    {
-                        targets: 5,
-                        render: function(data, type, row, meta){
-                            let status = '';
-                            if(type === 'display'){
-                                if (row.status == '{{ACTIVE_STATUS}}') {
-                                    status = '<span class="badge bg-success">Active</span>';
-                                } else if (row == '{{INACTIVE_STATUS}}') {
-                                    status = '<span class="badge bg-info">Inactive</span>';
-                                } else {
-                                    status = '<span class="badge bg-danger">Delete</span>';
-                                }
-                            }
-                            return status;
                         }
                     },
                     {

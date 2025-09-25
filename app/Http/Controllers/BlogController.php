@@ -21,18 +21,25 @@ class BlogController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Blog::with('user','images')->where('user_id',auth()->user()->id)->latest();
+            $data = Blog::with('user','images')->withCount([
+                'likes as like_count',
+                'unlikes as unlike_count'
+            ])->where('user_id',auth()->user()->id)->get();
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('edit-blog', $row->slug);
                     $deleteUrl = route('delete-blog', $row->slug);
 
-                    $actions = '<a href="' . $editUrl . '"><i class="fa-regular fa-pen-to-square fa-2x" aria-hidden="true"></i></a>';
-                    $actions .= '<i onclick="showSwal(\'passing-parameter-execute-cancel\', \'' . e($deleteUrl) . '\')" class="fa-solid fa-trash fa-2x text-danger ms-2" aria-hidden="true"></i>';
+                    $actions = '<div class="d-flex align-items-center">';
+                    $actions .= '<a href="' . $editUrl . '" class="me-1">';
+                    $actions .= '<i class="fa-regular fa-pen-to-square fa-2x" aria-hidden="true"></i>';
+                    $actions .= '</a>';
+
+                    $actions .= '<i onclick="showSwal(\'passing-parameter-execute-cancel\', \'' . e($deleteUrl) . '\')" class="fa-solid fa-trash fa-2x text-danger" aria-hidden="true"></i>';
+                    $actions .= '</div>';
 
                     return $actions;
                 })
-
                 ->addColumn('description', function ($row) {
                     return \Illuminate\Support\Str::limit(strip_tags($row->description), 70, '...');
                 })
@@ -46,7 +53,25 @@ class BlogController extends Controller
                     $html .= '</div>';
                     return $html;
                 })
-                ->rawColumns(['action','description','images'])
+                ->addColumn('likes', function ($row) {
+
+                    $html = '<div class="d-flex align-items-center">';
+
+                    $html .= '<button class="likebtn btn btn-outline-danger btn-sm me-2 liked" data-post-id="' . $row->id . '">';
+                    $html .= '<i class="fas fa-heart text-danger"></i> ';
+                    $html .= '<span class="like-count text-danger">' . $row->like_count . '</span>';
+                    $html .= '</button>';
+
+                    $html .= '<button class="unlikebtn btn btn-outline-secondary btn-sm unliked" data-post-id="' . $row->id . '">';
+                    $html .= '<i class="fas fa-thumbs-down text-primary"></i> ';
+                    $html .= '<span class="unlike-count text-primary">' . $row->unlike_count . '</span>';
+                    $html .= '</button>';
+
+                    $html .= '</div>';
+
+                    return $html;
+                })
+                ->rawColumns(['action','description','images','likes'])
                 ->make(true);
         }
 

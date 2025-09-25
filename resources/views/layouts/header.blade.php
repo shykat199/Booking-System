@@ -63,16 +63,6 @@
                         <ul class="profile-body">
                             <li class="d-flex">
                                 <svg class="svg-color">
-                                    <use href="../assets/svg/iconly-sprite.svg#Profile"></use>
-                                </svg><a class="ms-2" href="user-profile.html">Account</a>
-                            </li>
-                            <li class="d-flex">
-                                <svg class="svg-color">
-                                    <use href="../assets/svg/iconly-sprite.svg#Message"></use>
-                                </svg><a class="ms-2" href="letter-box.html">Inbox</a>
-                            </li>
-                            <li class="d-flex">
-                                <svg class="svg-color">
                                     <use href="../assets/svg/iconly-sprite.svg#Document"></use>
                                 </svg><a class="ms-2" href="{{route('home-page')}}">Go To Home</a>
                             </li>
