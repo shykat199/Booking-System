@@ -46,7 +46,8 @@
                                     data-post-id="{{ $post->id }}"
                                 @endif
                             >
-                                <i class="fas fa-heart"></i> <span class="like-count">{{$post->like_count}}</span>
+                                <i class="fas fa-heart {{ !$post->liked_by_user ? 'heart-outline' : '' }}"></i>
+                                <span class="like-count">{{$post->like_count}}</span>
                             </button>
 
                             <button class="{{Auth::user() ? 'unlikebtn' : ''}} btn btn-outline-secondary btn-sm {{ $post->unliked_by_user ? 'unliked' : '' }}"
@@ -56,7 +57,8 @@
                                     data-post-id="{{ $post->id }}"
                                 @endif
                             >
-                                <i class="fas fa-thumbs-down"></i> <span class="unlike-count">{{$post->unlike_count}}</span>
+                                <i class="fas fa-thumbs-down {{ $post->unliked_by_user ? 'text-primary' : '' }}"></i>
+                                <span class="unlike-count">{{$post->unlike_count}}</span>
                             </button>
                         </div>
 
@@ -143,5 +145,11 @@
             });
 
         });
+    </script>
+    <script>
+        function openLoginModal() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        }
     </script>
 @endpush
