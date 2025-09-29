@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             ServiceBookingSeeder::class,
             TaskSeeder::class,
+            CountrySeeder::class,
+            CitySeeder::class,
+            ProgramSeeder::class,
+            StudyAreaSeeder::class,
+            UniversitySeeder::class,
         ]);
     }
 }
