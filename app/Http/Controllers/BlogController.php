@@ -24,7 +24,7 @@ class BlogController extends Controller
             $data = Blog::with('user','images')->withCount([
                 'likes as like_count',
                 'unlikes as unlike_count'
-            ])->where('user_id',auth()->user()->id)->get();
+            ])->where('user_id',auth()->user()->id);
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $editUrl = route('edit-blog', $row->slug);
