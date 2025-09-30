@@ -7,10 +7,9 @@
                 <input type="text" class="search-input" placeholder="Search Universities, Courses" id="universitySearch">
                 <select class="country-dropdown" id="countryFilter">
                     <option value="">Choose Country</option>
-                    <option value="australia">Australia</option>
-                    <option value="uk">UK</option>
-                    <option value="usa">USA</option>
-                    <option value="canada">Canada</option>
+                    @foreach($countries as $country)
+                        <option value="{{$country->id}}">{{$country->name}}</option>
+                    @endforeach
                 </select>
                 <button class="search-btn" id="searchBtn">
                     <i class="fas fa-search"></i>

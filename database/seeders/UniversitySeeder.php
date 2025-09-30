@@ -4,14 +4,18 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Programs;
+use App\Models\StudyArea;
 use App\Models\University;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Random\RandomException;
 
 class UniversitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * @throws RandomException
      */
     public function run(): void
     {
@@ -62,19 +66,33 @@ class UniversitySeeder extends Seeder
             $city = City::where('name', $uni['city'])->first();
 
             if ($country && $city) {
-                University::updateOrCreate(
+                $university = University::updateOrCreate(
                     ['name' => $uni['name']],
                     [
                         'country_id' => $country->id,
                         'city_id' => $city->id,
                         'cricos' => $uni['cricos'] ?? null,
                         'campus_count' => rand(1, 6),
-                        'description' => $uni['name'].' is one of the leading universities in '.$uni['country'].'. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                        'description' => $uni['name'].' is one of the leading universities in '.$uni['country'].'. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                         'logo' => strtolower(str_replace(' ', '-', $uni['name'])).'-logo.png',
                         'image' => strtolower(str_replace(' ', '-', $uni['name'])).'-campus.jpg',
                         'status' => ACTIVE_STATUS,
                     ]
                 );
+
+                $programs = Programs::inRandomOrder()->take(random_int(2, 4))->get();
+
+                foreach ($programs as $program) {
+                    StudyArea::updateOrCreate(
+                        [
+                            'university_id' => $university->id,
+                            'program_id' => $program->id,
+                        ],
+                        [
+                            'name' => $program->name . ' at ' . $university->name,
+                        ]
+                    );
+                }
             }
         }
     }
