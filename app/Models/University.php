@@ -28,4 +28,9 @@ class University extends Model
         return $this->belongsTo(City::class,'city_id','id');
 
     }
+
+    public function studyAreas()
+    {
+        return $this->hasMany(StudyArea::class,'university_id','id');
+    }
 }

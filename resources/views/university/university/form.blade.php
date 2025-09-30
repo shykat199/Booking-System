@@ -160,7 +160,87 @@
                                 @error('image')<span class="text-danger">{{$message}}</span>@enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ isset($university) ? 'Update' : 'Create' }}</button>
+                            <div class="row mb-2">
+                                <label for="study_area" class="form-label">Study Area</label>
+                                @if(isset($university) && !empty($university))
+                                    <div id="groups-wrapper">
+                                        @foreach($studyAreas as $key => $area)
+                                            <div class="group border p-3 mb-3" data-group-index="{{ $key }}">
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Program</label>
+                                                        <select name="groups[{{ $key }}][select][]" class="form-control program-select">
+                                                            <option value="">Select Program</option>
+                                                            @foreach($programs as $program)
+                                                                <option value="{{ $program->id }}" {{ $area->program_id == $program->id ? 'selected' : '' }}>
+                                                                    {{ $program->name }} | {{ $program->duration }} Year
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-8 course-items-wrapper">
+                                                        <label class="form-label">Course Item</label>
+                                                        @php
+                                                            $courses = explode('<||>', $area->courses);
+                                                        @endphp
+
+                                                        @foreach($courses as $c_key => $course)
+                                                            <div class="row mb-2 align-items-center course-item-row">
+                                                                <div class="col">
+                                                                    <input type="text" name="groups[{{ $key }}][input][]" class="form-control" value="{{ $course }}" placeholder="Course Item">
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <button type="button" class="btn btn-danger remove-input">Remove</button>
+                                                                    @if($c_key == 0)
+                                                                        <button type="button" class="btn btn-success add-input">+ Add Input</button>
+                                                                    @else
+                                                                        <div style="width: 185px"></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div id="groups-wrapper">
+                                        <div class="group border p-3 mb-3" data-group-index="0">
+                                            <div class="row align-items-center mb-2">
+                                                <div class="col-md-4">
+                                                    <label for="program" class="form-label">Program</label>
+                                                    <select name="groups[0][select][]" class="form-control">
+                                                        <option value="">Select Program</option>
+                                                        @foreach($programs as $program)
+                                                            <option value="{{$program->id}}">{{$program->name }} | {{$program->duration . ' Year' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('groups.0.select.0'))
+                                                        <span class="text-danger">{{ $errors->first('groups.0.select.0') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="course_item" class="form-label">Course Item</label>
+                                                    <input type="text" name="groups[0][input][]" class="form-control" placeholder="Course Item">
+                                                    @if ($errors->has('groups.0.input.0'))
+                                                        <span class="text-danger">{{ $errors->first('groups.0.input.0') }}</span>
+                                                    @endif
+
+                                                </div>
+                                                <div class="col-md-2 mt-4">
+                                                    <button type="button" class="btn btn-success add-input">+ Add Input</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                <button type="button" id="add-group" class="btn btn-primary mt-2">+ Add More Group</button>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-3">{{ isset($university) ? 'Update' : 'Create' }}</button>
                         </form>
                     </div>
                 </div>
@@ -220,6 +300,94 @@
                 } else {
                     citySelect.empty().append('<option value="">Select City</option>');
                 }
+            });
+        });
+    </script>
+    <<script>
+        $(document).ready(function () {
+            let groupIndex = 0;
+
+            // Store all programs in JS
+            const allPrograms = @json($programs);
+
+            function getAvailablePrograms() {
+                let selectedPrograms = [];
+                $('.program-select').each(function () {
+                    if ($(this).val()) selectedPrograms.push($(this).val());
+                });
+
+                return allPrograms.filter(p => !selectedPrograms.includes(p.id.toString()));
+            }
+
+            // Add input inside a group
+            $(document).on('click', '.add-input', function () {
+                let group = $(this).closest('.group');
+                let gIndex = group.data('group-index');
+
+                let newRow = $(`
+            <div class="row align-items-center mb-2">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="groups[${gIndex}][input][]" class="form-control" placeholder="Course Item">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger remove-input">Remove</button>
+                </div>
+            </div>
+        `);
+
+                group.append(newRow);
+                renderProgramOptions(newRow.find('.program-select'));
+            });
+
+            // Remove input row
+            $(document).on('click', '.remove-input', function () {
+                $(this).closest('.row').remove();
+            });
+
+            // Add more group
+            $('#add-group').click(function () {
+                groupIndex++;
+                let newGroup = $(`
+        <div class="group border p-3 mb-3" data-group-index="${groupIndex}">
+            <div class="row align-items-center mb-2">
+                <div class="col-md-4">
+                    <label class="form-label">Program</label>
+                    <select name="groups[${groupIndex}][select][]" class="form-control program-select">
+                        <option value="">Select Program</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Course Item</label>
+                    <input type="text" name="groups[${groupIndex}][input][]" class="form-control" placeholder="Course Item">
+                </div>
+                <div class="col-md-2 mt-4">
+                    <button type="button" class="btn btn-success add-input">+ Add Input</button>
+                </div>
+            </div>
+        </div>
+    `);
+
+                $('#groups-wrapper').append(newGroup);
+
+                let select = newGroup.find('.program-select');
+                @foreach($programs as $program)
+                select.append(`<option value="{{ $program->id }}">{{ $program->name }} | {{ $program->duration }} Year</option>`);
+                @endforeach
+            });
+
+            // Update dropdowns when selection changes
+            $(document).on('change', '.program-select', function () {
+                $('.program-select').each(function () {
+                    renderProgramOptions($(this), $(this).val());
+                });
+            });
+
+            // Initial render for first select
+            $('.program-select').each(function () {
+                renderProgramOptions($(this), $(this).val());
             });
         });
     </script>
