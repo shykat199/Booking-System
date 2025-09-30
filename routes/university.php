@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\University\CountryController;
 use App\Http\Controllers\University\CityController;
 use App\Http\Controllers\University\ProgramsController;
+use App\Http\Controllers\University\UniversityController;
 
 
 Route::controller(UniversityHomeController::class)->prefix('university')->name('university.')->group(function () {
@@ -32,6 +33,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/save-program', 'store')->name('save-program');
         Route::put('/update-program/{id}', 'update')->name('update-program');
         Route::get('/delete-program/{id}', 'destroy')->name('delete-program');
+    });
+
+    Route::controller(UniversityController::class)->group(function () {
+        Route::get('/university-list', 'index')->name('university');
+        Route::get('/create-university', 'create')->name('create-university');
+        Route::get('/university-details/{id}', 'edit')->name('edit-university');
+        Route::post('/save-university', 'store')->name('save-university');
+        Route::put('/update-university/{id}', 'update')->name('update-university');
+        Route::get('/delete-university/{id}', 'destroy')->name('delete-university');
+
+        Route::get('/get-cities/{country_id}','getCities')->name('get-cities');
+
     });
 
 });

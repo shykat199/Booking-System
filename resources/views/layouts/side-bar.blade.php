@@ -65,6 +65,21 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="sidebar-list {{ request()->routeIs(['university','create-university','save-university','update-university','delete-university']) ? 'active' : '' }}">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h6>University</h6>
+                </a>
+                <ul class="sidebar-submenu" style="display: {{ request()->routeIs(['university','create-university','save-university','edit-university']) ? 'block' : 'none' }};">
+                    <li>
+                        <a class="{{ request()->routeIs('university') ? 'active' : '' }}" href="{{ route('university') }}">University List</a>
+                    </li>
+                    <li>
+                        <a class="{{ request()->routeIs('create-university') ? 'active' : '' }}" href="{{ route('create-university') }}">Create University</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
