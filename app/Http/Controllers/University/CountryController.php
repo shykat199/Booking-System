@@ -89,20 +89,6 @@ class CountryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Blog $blog)
-    {
-        if (empty($blog)){
-            abort(404);
-        }
-        $data['authors']=User::all();
-        $data['blog']=$blog;
-        $data['blog_images']=$blog->images;
-        return view('blog.form',$data);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
@@ -150,26 +136,9 @@ class CountryController extends Controller
             $country->delete();
             toast('Country deleted successfully!','success');
 
-            return redirect()->route('Country');
+            return redirect()->route('country');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
-    }
-
-    public function deleteImage(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:blog_images,id',
-        ]);
-
-        $image = BlogImage::findOrFail($request->id);
-
-        if (\Storage::disk('public')->exists($image->image)) {
-            \Storage::disk('public')->delete($image->image);
-        }
-
-        $image->delete();
-
-        return response()->json(['success' => true]);
     }
 }

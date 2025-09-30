@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title','Country List')
+@section('page-title','City List')
 @push('style')
 @endpush
 @section('content')
@@ -8,8 +8,8 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-sm-6 col-12">
-                    <h2>Country List</h2>
-                    <button class="btn btn-primary mt-3" type="button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">Create New Country +</button>
+                    <h2>City List</h2>
+                    <button class="btn btn-primary mt-3" type="button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">Create New City +</button>
                 </div>
 
             </div>
@@ -28,6 +28,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
+                                    <th>Country</th>
                                     <th>status</th>
                                     <th>Created At</th>
                                     <th>Action</th>
@@ -51,23 +52,31 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-header">
-                        <h3 class="modal-title fs-5" id="editBlogModalLabel">Update Country</h3>
+                        <h3 class="modal-title fs-5" id="editBlogModalLabel">Update City</h3>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body dark-modal">
                         <div class="mb-3 modal-padding-space">
                             <label for="blogName" class="form-label">Name</label>
                             <input type="text" class="form-control" id="blogName" name="name" required>
-                            @error('name') <p class="text-danger">{{$message}}</p>  @enderror
-
+                             @error('name') <p class="text-danger">{{$message}}</p>  @enderror
+                        </div>
+                        <div class="mb-3 modal-padding-space">
+                            <label for="blogStatus" class="form-label">Country</label>
+                            <select class="form-select" id="countryId" name="country_id" required>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->id}}">{{$country->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('country_id') <p class="text-danger">{{$message}}</p>  @enderror
                         </div>
                         <div class="mb-3 modal-padding-space">
                             <label for="blogStatus" class="form-label">Status</label>
-                            <select class="form-select" id="blogStatus" name="status">
+                            <select class="form-select" id="blogStatus" name="status" required>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
-                            @error('status') <p class="text-danger">{{$message}}</p>  @enderror
+                             @error('status') <p class="text-danger">{{$message}}</p>  @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -83,25 +92,40 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title fs-5" id="mySmallCreateModalLabel">New Country</h3>
+                    <h3 class="modal-title fs-5" id="mySmallCreateModalLabel">New City</h3>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark-modal">
-                    <form id="mySmallCreateModalLabel" method="post" action="{{route('save-country')}}">
+                    <form id="mySmallCreateModalLabel" method="post" action="{{route('save-city')}}">
                         @csrf
                         <div class="modal-body dark-modal">
                             <div class="mb-3 modal-padding-space">
                                 <label for="blogName" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="blogName" name="name" required>
-                                 @error('name') <p class="text-danger">{{$message}}</p>  @enderror
                             </div>
+                             @error('name') <p class="text-danger">{{$message}}</p>  @enderror
+
+
+                            <div class="mb-3 modal-padding-space">
+                                <label for="blogStatus" class="form-label">Country</label>
+                                <select class="form-select" id="blogStatus" name="country_id">
+                                    <option value="">Select Country</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{$country->id}}">{{$country->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_id') <p class="text-danger">{{$message}}</p>  @enderror
+
+                            </div>
+
                             <div class="mb-3 modal-padding-space">
                                 <label for="blogStatus" class="form-label">Status</label>
                                 <select class="form-select" id="blogStatus" name="status">
                                     <option value="1">Active</option>
                                     <option value="0">Inactive</option>
                                 </select>
-                                 @error('status') <p class="text-danger">{{$message}}</p>  @enderror
+                                @error('status') <p class="text-danger">{{$message}}</p>  @enderror
+
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -128,12 +152,13 @@
                 searching: true,
                 order: [[0, 'desc']],
                 ajax: {
-                    url: '{{ route("country") }}',
+                    url: '{{ route("city") }}',
                     type: 'GET',
                 },
                 "columns": [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
+                    {data: 'country', name: 'country_id'},
                     {data: 'status', name: 'status',orderable: false, searchable: false},
                     {data: 'created_at', name: 'created_at',orderable: false, searchable: false},
                     {data: 'action', name: 'action',orderable: false, searchable: false},
@@ -148,6 +173,12 @@
                     {
                         targets: 2,
                         render: function(data, type, row, meta){
+                            return row.country.name
+                        }
+                    },
+                    {
+                        targets: 3,
+                        render: function(data, type, row, meta){
                             if (row.status == 1) {
                                 return '<span class="badge bg-success">Active</span>';
                             } else {
@@ -156,7 +187,7 @@
                         }
                     },
                     {
-                        targets: 3,
+                        targets: 4,
                         render: function(data, type, row, meta){
                             let dateTime = '';
                             if(type === 'display'){
@@ -227,6 +258,7 @@
                 const button = event.relatedTarget;
 
                 // Extract info from data attributes
+                const country_id = button.getAttribute('data-country');
                 const url = button.getAttribute('data-url');
                 const name = button.getAttribute('data-name');
                 const status = button.getAttribute('data-status');
@@ -235,6 +267,7 @@
                 const form = document.getElementById('editBlogForm');
                 form.action = url;
                 document.getElementById('blogName').value = name;
+                document.getElementById('countryId').value = country_id;
                 document.getElementById('blogStatus').value = status;
             });
         });
