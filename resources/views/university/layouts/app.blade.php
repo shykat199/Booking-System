@@ -19,13 +19,20 @@
 <!-- Main Content -->
 <section class="main-content">
     <div class="container">
-        <div class="row">
+        <div class="row position-relative">
             <!-- Filter Sidebar -->
             @include('university.filter-sidebar')
 
            @section('university-content')
-            @show
 
+           @show
+
+        </div>
+
+        <div id="filterLoader" style="display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
 </section>
@@ -67,11 +74,6 @@
 
         // Country filter dropdown
         countryFilter.addEventListener('change', filterByCountry);
-
-        // Country checkboxes
-        countryCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', filterByCheckboxes);
-        });
 
         // University name click
         document.addEventListener('click', function(e) {
@@ -127,23 +129,6 @@
         performSearch();
     }
 
-    // Filter by checkboxes
-    function filterByCheckboxes() {
-        const checkedCountries = Array.from(countryCheckboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value);
-
-        let filteredUniversities = universities;
-
-        if (checkedCountries.length > 0) {
-            filteredUniversities = filteredUniversities.filter(uni =>
-                checkedCountries.includes(uni.country)
-            );
-        }
-
-        renderUniversities(filteredUniversities);
-        showResultsCount(filteredUniversities.length);
-    }
 
     // Show results count
     function showResultsCount(count) {

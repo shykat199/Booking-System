@@ -277,23 +277,27 @@
     color: var(--dark-orange);
 }
 
+.university-details {
+    display: flex;
+    flex-direction: column;  /* stack children vertically */
+    align-items: flex-start; /* align everything to the left */
+    gap: 0.5rem;             /* space between name and info */
+}
+
 .university-info {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    font-size: 0.85rem;
+    flex-direction: column;  /* stack info items vertically */
+    gap: 0.25rem;            /* spacing between items */
 }
 
 .info-item {
     display: flex;
     align-items: center;
-    white-space: nowrap;
     color: #555;
 }
 
 .info-item i {
-    margin-right: 6px;
+    margin-right: 8px;
     font-size: 0.9rem;
     color: #444;
 }

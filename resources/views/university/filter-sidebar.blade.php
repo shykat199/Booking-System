@@ -7,8 +7,8 @@
             <div class="filter-options collapse show" id="countriesFilter">
                 @foreach($countries as $country)
                     <div class="filter-option">
-                        <input type="checkbox" id="{{$country->id}}" value="{{$country->id}}">
-                        <label for="{{$country->id}}">{{$country->name}}</label>
+                        <input type="checkbox" class="country-checkbox" id="country-{{$country->id}}" value="{{$country->id}}">
+                        <label for="country-{{$country->id}}">{{$country->name}}</label>
                     </div>
                 @endforeach
             </div>
@@ -73,3 +73,42 @@
         </div>
     </div>
 </div>
+@push('university.script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const universityGrid = document.getElementById('universityGrid');
+            const loader = document.getElementById('filterLoader');
+            let offset = 0;
+            let selectedCountries = [];
+
+            function fetchFilteredUniversities() {
+                loader.style.display = 'flex';
+
+                const params = new URLSearchParams();
+                params.append('offset', offset);
+                selectedCountries.forEach(id => params.append('countries[]', id));
+
+                fetch(`{{ route('university.filter') }}?${params.toString()}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        universityGrid.innerHTML = data.html;
+                        loader.style.display = 'none';
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        loader.style.display = 'none';
+                    });
+            }
+
+            // Country filter change
+            document.querySelectorAll('.country-checkbox').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    selectedCountries = Array.from(document.querySelectorAll('.country-checkbox:checked'))
+                        .map(el => el.value);
+                    offset = 0; // reset
+                    fetchFilteredUniversities();
+                });
+            });
+        });
+    </script>
+@endpush
