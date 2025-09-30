@@ -18,6 +18,29 @@ class UniversityHomeController extends Controller
 
     }
 
+    public function filter(Request $request)
+    {
+        $countryIds = $request->input('countries', []); // array of selected country IDs
+        $offset = $request->input('offset', 0);
+        $limit = 10;
+
+        $query = University::orderBy('id', 'asc');
+
+        if (!empty($countryIds)) {
+            $query->whereIn('country_id', $countryIds);
+        }
+
+        $universities = $query->skip($offset)->take($limit)->get();
+
+        $html = '';
+        foreach ($universities as $university) {
+            $html .= view('university.partials.university_cards', compact('university'))->render();
+        }
+
+        return response()->json([
+            'html' => $html,
+        ]);
+    }
 
     public function loadMore(Request $request)
     {

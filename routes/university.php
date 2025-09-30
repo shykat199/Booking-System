@@ -11,6 +11,8 @@ use App\Http\Controllers\University\UniversityController;
 Route::controller(UniversityHomeController::class)->prefix('university')->name('university.')->group(function () {
     route::get('/', 'index')->name('home');
     Route::get('/universities/load-more', 'loadMore')->name('loadMore');
+    Route::get('/universities/filter', 'filter')->name('filter');
+
 
 });
 
