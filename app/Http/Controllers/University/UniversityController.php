@@ -291,6 +291,8 @@ class UniversityController extends Controller
                 Storage::disk('public')->delete($university->image);
             }
 
+            StudyArea::where('university_id', $university->id)->delete();
+
             $university->delete();
 
             DB::commit();
