@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{route('university.home')}}">
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='35' viewBox='0 0 120 35'%3E%3Cg%3E%3Crect x='0' y='0' width='30' height='35' fill='%235a4fcf'/%3E%3Crect x='30' y='0' width='30' height='35' fill='%239c88ff'/%3E%3Crect x='60' y='0' width='30' height='35' fill='%23c4b5fd'/%3E%3C/g%3E%3Ctext x='95' y='12' font-family='Arial, sans-serif' font-size='8' font-weight='bold' fill='%235a4fcf'%3EPFEC%3C/text%3E%3Ctext x='95' y='22' font-family='Arial, sans-serif' font-size='6' fill='%23666'%3EGlobal%3C/text%3E%3Ctext x='95' y='30' font-family='Arial, sans-serif' font-size='6' fill='%23999'%3EStudy Abroad | Visa%3C/text%3E%3C/svg%3E" alt="PFEC Global">
         </a>
 
