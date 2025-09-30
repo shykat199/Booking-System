@@ -40,54 +40,6 @@
 
 <!-- Custom JavaScript -->
 <script>
-    // University data
-    const universities = [
-        {
-            name: "Deakin University",
-            country: "australia",
-            logo: "DEAKIN UNIVERSITY",
-            icon: "fas fa-graduation-cap",
-            programs: "UG & PG Programs",
-            campuses: "5 Campuses Worldwide",
-            gradient: "linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)"
-        },
-        {
-            name: "The University of Sydney",
-            country: "australia",
-            logo: "THE UNIVERSITY OF SYDNEY",
-            icon: "fas fa-star",
-            programs: "UG & PG Programs",
-            campuses: "11 Campuses",
-            gradient: "linear-gradient(45deg, #fa709a 0%, #fee140 100%)"
-        },
-        {
-            name: "University of Oxford",
-            country: "uk",
-            logo: "UNIVERSITY OF OXFORD",
-            icon: "fas fa-crown",
-            programs: "UG & PG Programs",
-            campuses: "Historic Colleges",
-            gradient: "linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)"
-        },
-        {
-            name: "Cambridge University",
-            country: "uk",
-            logo: "CAMBRIDGE UNIVERSITY",
-            icon: "fas fa-graduation-cap",
-            programs: "UG & PG Programs",
-            campuses: "31 Colleges",
-            gradient: "linear-gradient(45deg, #d299c2 0%, #fef9d7 100%)"
-        },
-        {
-            name: "Harvard University",
-            country: "usa",
-            logo: "HARVARD UNIVERSITY",
-            icon: "fas fa-university",
-            programs: "UG & PG Programs",
-            campuses: "Main Campus",
-            gradient: "linear-gradient(45deg, #89f7fe 0%, #66a6ff 100%)"
-        }
-    ];
 
     // DOM Elements
     const universityGrid = document.getElementById('universityGrid');
@@ -298,5 +250,6 @@
 
     console.log('PFEC Global website loaded successfully!');
 </script>
+@stack('university.script')
 </body>
 </html>

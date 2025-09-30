@@ -11,9 +11,34 @@ class UniversityHomeController extends Controller
 {
     public function index()
     {
-        $data['universities'] = University::with(['country','city'])->where('status',ACTIVE_STATUS)->latest()->get();
+        $data['universities'] = University::with(['country','city'])->where('status',ACTIVE_STATUS)->latest()->limit(15)->get();
+        $data['total'] = University::where('status',ACTIVE_STATUS)->count();
         $data['countries'] = Country::where('status',ACTIVE_STATUS)->get();
         return view('university.home',$data);
 
+    }
+
+
+    public function loadMore(Request $request)
+    {
+        $offset = $request->input('offset', 0);
+        $limit = 10;
+
+        $universities = University::with(['country','city'])->latest()
+            ->skip($offset)
+            ->take($limit)
+            ->get();
+
+        $html = '';
+        foreach ($universities as $university) {
+            $html .= view('university.partials.university_cards', compact('university'))->render();
+        }
+
+        $allLoaded = ($offset + $limit) >= University::count();
+
+        return response()->json([
+            'html' => $html,
+            'allLoaded' => $allLoaded,
+        ]);
     }
 }
