@@ -78,6 +78,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const universityGrid = document.getElementById('universityGrid');
             const loader = document.getElementById('filterLoader');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
             let offset = 0;
             let selectedCountries = [];
 
@@ -93,6 +94,7 @@
                     .then(data => {
                         universityGrid.innerHTML = data.html;
                         loader.style.display = 'none';
+                        loadMoreBtn.style.display = 'none';
                     })
                     .catch(err => {
                         console.error(err);

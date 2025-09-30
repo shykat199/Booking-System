@@ -20,9 +20,7 @@ class UniversityHomeController extends Controller
 
     public function filter(Request $request)
     {
-        $countryIds = $request->input('countries', []); // array of selected country IDs
-        $offset = $request->input('offset', 0);
-        $limit = 10;
+        $countryIds = $request->input('countries', []);
 
         $query = University::orderBy('id', 'asc');
 
@@ -30,7 +28,7 @@ class UniversityHomeController extends Controller
             $query->whereIn('country_id', $countryIds);
         }
 
-        $universities = $query->skip($offset)->take($limit)->get();
+        $universities = $query->get();
 
         $html = '';
         foreach ($universities as $university) {
