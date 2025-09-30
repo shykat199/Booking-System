@@ -41,6 +41,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="sidebar-list {{request()->routeIs('city') ? 'active' : ''}}">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h6>City</h6>
+                </a>
+                <ul class="sidebar-submenu" style="display: {{request()->routeIs('city') ? 'block' : 'none'}};">
+                    <li>
+                        <a class="{{request()->routeIs('city') ? 'active' : ''}}" href="{{ route('city') }}">City List</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
