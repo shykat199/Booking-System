@@ -53,6 +53,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="sidebar-list {{request()->routeIs('program') ? 'active' : ''}}">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h6>Program</h6>
+                </a>
+                <ul class="sidebar-submenu" style="display: {{request()->routeIs('program') ? 'block' : 'none'}};">
+                    <li>
+                        <a class="{{request()->routeIs('program') ? 'active' : ''}}" href="{{ route('program') }}">Program List</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
