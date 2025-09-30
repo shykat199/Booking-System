@@ -5,50 +5,12 @@
         <div class="filter-section">
             <h6 data-bs-toggle="collapse" data-bs-target="#countriesFilter">Countries</h6>
             <div class="filter-options collapse show" id="countriesFilter">
-                <div class="filter-option">
-                    <input type="checkbox" id="australia" value="australia" checked>
-                    <label for="australia">Australia</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="uk" value="uk" checked>
-                    <label for="uk">UK</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="usa" value="usa">
-                    <label for="usa">USA</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="canada" value="canada">
-                    <label for="canada">Canada</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="ireland" value="ireland">
-                    <label for="ireland">Ireland</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="malaysia" value="malaysia">
-                    <label for="malaysia">Malaysia</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="newzealand" value="newzealand">
-                    <label for="newzealand">New Zealand</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="japan" value="japan">
-                    <label for="japan">Japan</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="dubai" value="dubai">
-                    <label for="dubai">Dubai</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="europe" value="europe">
-                    <label for="europe">Europe</label>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="indonesia" value="indonesia">
-                    <label for="indonesia">Indonesia</label>
-                </div>
+                @foreach($countries as $country)
+                    <div class="filter-option">
+                        <input type="checkbox" id="{{$country->id}}" value="{{$country->id}}">
+                        <label for="{{$country->id}}">{{$country->name}}</label>
+                    </div>
+                @endforeach
             </div>
         </div>
 
