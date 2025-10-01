@@ -50,7 +50,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="cf-turnstile"
+                        <div id="cf-turnstile" class="cf-turnstile"
                             data-sitekey="{{config('app.cloud_flare_site_key')}}"
                             data-theme="light"
                             data-size="normal"
@@ -71,6 +71,21 @@
 @push('university.script')
 
     <script>
+        let turnstileWidgetId;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            turnstileWidgetId = turnstile.render('#cf-turnstile', {
+                sitekey: "{{ config('app.cloud_flare_site_key') }}",
+                theme: "light",
+                size: "normal",
+                callback: onSuccess
+            });
+        });
+
+        function onSuccess(token) {
+            console.log("Captcha solved:", token);
+        }
+
         document.getElementById('contactUsForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -126,7 +141,7 @@
                 .then(data => {
                     if (data.success) {
                         form.reset();
-                        turnstile.reset(); // 🔥 Reset Cloudflare captcha
+                        turnstile.reset(turnstileWidgetId);
 
                         Swal.fire({
                             toast: true,
@@ -138,7 +153,7 @@
                             timerProgressBar: true
                         });
                     } else {
-                        turnstile.reset(); // also reset if captcha failed
+                        turnstile.reset(turnstileWidgetId);
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
