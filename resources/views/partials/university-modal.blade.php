@@ -1,4 +1,3 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -17,7 +16,7 @@
         position:absolute;top:0;left:0;right:0;bottom:0;
         background:linear-gradient(135deg,rgba(99,102,241,0.95),rgba(168,85,247,0.95));
     }
-    .hero-content {
+    .hero-content-area {
         height:100%;display:flex;align-items:center;position:relative;z-index:2;
     }
     .hero-inner {padding:3rem 1.5rem;}
@@ -167,7 +166,6 @@
     }
 </style>
 
-
 <div class="university-modal-wrapper">
 
     <!-- Hero Section -->
@@ -177,7 +175,7 @@
         </div>
         <div class="hero-overlay"></div>
 
-        <div class="hero-content">
+        <div class="hero-content-area">
             <div class="hero-inner">
                 <div class="hero-flex">
                     <div>
