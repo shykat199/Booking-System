@@ -6,6 +6,7 @@ use App\Http\Controllers\University\CountryController;
 use App\Http\Controllers\University\CityController;
 use App\Http\Controllers\University\ProgramsController;
 use App\Http\Controllers\University\UniversityController;
+use App\Http\Controllers\University\ContactUsController;
 
 
 Route::controller(UniversityHomeController::class)->prefix('university')->name('university.')->group(function () {
@@ -14,6 +15,10 @@ Route::controller(UniversityHomeController::class)->prefix('university')->name('
     Route::get('/universities/filter', 'filter')->name('filter');
     Route::get('/configure-index', 'configureIndex');
     Route::get('/university-details/{id}', 'showUniversityDetails')->name('university.modal');
+});
+
+Route::controller(ContactUsController::class)->prefix('university')->name('university.')->group(function () {
+    route::post('/send-query', 'sendQuery')->name('send-query');
 });
 
 Route::middleware('auth')->group(function () {

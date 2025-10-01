@@ -66,6 +66,7 @@
 
 <!-- Bootstrap JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Custom JavaScript -->
 <script>
@@ -192,18 +193,6 @@
             });
         });
     }
-
-    // Form validation for consultation booking
-    document.querySelector('.btn-orange').addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // Simple booking form simulation
-        const userConfirmed = confirm('Would you like to book a free consultation? This will redirect you to our booking page.');
-
-        if (userConfirmed) {
-            alert('Thank you for your interest! You would normally be redirected to our booking system.');
-        }
-    });
 
     // Lazy loading simulation for university images
     const observerOptions = {

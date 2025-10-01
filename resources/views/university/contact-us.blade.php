@@ -27,37 +27,31 @@
             <!-- Right Side: Contact Form -->
             <div class="col-lg-6">
                 <div class="card shadow-sm p-4 rounded-3">
-                    <form>
+                    <form id="contactUsForm">
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Full Name" required>
+                            <input type="text" name="name" class="form-control" placeholder="Full Name" >
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email ID" required>
+                            <input type="email" name="email" class="form-control" placeholder="Email ID" >
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            <input type="tel" name="phone" class="form-control" placeholder="Phone Number" >
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
-                            <select class="form-select" required>
+                            <select class="form-select" name="query" required>
                                 <option selected disabled>I would like to know more about</option>
-                                <option>Study Abroad</option>
-                                <option>Scholarships</option>
-                                <option>Test Preparation</option>
+                                <option value="Study Abroad">Study Abroad</option>
+                                <option value="Scholarships">Scholarships</option>
+                                <option value="Test Preparation">Test Preparation</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
 
-                        <!-- Checkbox -->
-                        <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input" id="agreeCheck" required>
-                            <label class="form-check-label small" for="agreeCheck">
-                                I agree to <a href="#" class="text-orange">privacy policy</a> and
-                                <a href="#" class="text-orange">Terms of Use</a>
-                            </label>
-                        </div>
-
-                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-orange w-100 rounded-pill">
-                            Log In
+                            Send Query
                         </button>
                     </form>
                 </div>
@@ -66,3 +60,90 @@
         </div>
     </div>
 </section>
+
+@push('university.script')
+
+    <script>
+        document.getElementById('contactUsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            let valid = true;
+
+            form.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
+            form.querySelectorAll('.form-control, .form-select').forEach(el => el.classList.remove('is-invalid'));
+
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const query = form.query.value;
+
+            if (name === '') {
+                valid = false;
+                form.name.classList.add('is-invalid');
+                form.name.nextElementSibling.textContent = 'Full Name is required';
+            }
+            if (email === '') {
+                valid = false;
+                form.email.classList.add('is-invalid');
+                form.email.nextElementSibling.textContent = 'Email is required';
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                valid = false;
+                form.email.classList.add('is-invalid');
+                form.email.nextElementSibling.textContent = 'Enter a valid email';
+            }
+            if (phone === '') {
+                valid = false;
+                form.phone.classList.add('is-invalid');
+                form.phone.nextElementSibling.textContent = 'Phone Number is required';
+            } else if (!/^[0-9+\-() ]{6,20}$/.test(phone)) {
+                valid = false;
+                form.phone.classList.add('is-invalid');
+                form.phone.nextElementSibling.textContent = 'Enter a valid phone number';
+            }
+            if (!query) {
+                valid = false;
+                form.query.classList.add('is-invalid');
+                form.query.nextElementSibling.textContent = 'Please select an option';
+            }
+
+            if (!valid) return;
+
+            const formData = new FormData(form);
+            fetch("{{ route('university.send-query') }}", {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        form.reset();
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: data.message || 'Query sent successfully!',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.message || 'Something went wrong!'
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!'
+                    });
+                });
+        });
+    </script>
+@endpush
