@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'cloud_flare_site_key' => env('CLOUDFLARE_TURNSTILE_SITE_KEY', '0x4AAAAAAB4VlIH19BJUqESr'),
+    'cloud_flare_secret_key' => env('CLOUDFLARE_TURNSTILE_SECRET_KEY', '0x4AAAAAAB4VlLmd5eK87nnvKFYycogH0gE'),
+
 ];

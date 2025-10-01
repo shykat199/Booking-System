@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="cf-turnstile"
-                            data-sitekey="{{env('CLOUDFLARE_TURNSTILE_SITE_KEY')}}"
+                            data-sitekey="{{config('app.cloud_flare_site_key')}}"
                             data-theme="light"
                             data-size="normal"
                             data-callback="onSuccess"
