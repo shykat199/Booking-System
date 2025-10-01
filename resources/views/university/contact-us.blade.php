@@ -50,12 +50,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div id="cf-turnstile" class="cf-turnstile"
-                            data-sitekey="{{config('app.cloud_flare_site_key')}}"
-                            data-theme="light"
-                            data-size="normal"
-                            data-callback="onSuccess"
-                        ></div>
+{{--                        <div id="cf-turnstile" class="cf-turnstile"--}}
+{{--                            data-sitekey="{{config('app.cloud_flare_site_key')}}"--}}
+{{--                            data-theme="light"--}}
+{{--                            data-size="normal"--}}
+{{--                            data-callback="onSuccess"--}}
+{{--                        ></div>--}}
 
                         <button type="submit" id="sendQueryBtn">
                             Send Query
