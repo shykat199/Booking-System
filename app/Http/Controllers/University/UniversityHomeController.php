@@ -35,7 +35,6 @@ class UniversityHomeController extends Controller
             return view('university.home-search', $data);
         } else {
             $data['universities'] = University::with(['country','city'])
-
                 ->where('status', ACTIVE_STATUS)
                 ->latest()
                 ->limit(15)
