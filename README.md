@@ -383,10 +383,8 @@ curl http://127.0.0.1:7700/health
 - Verify credentials in `.env`
 - Check if MySQL is running: `sudo systemctl status mysql`
 
-## 📄 License
-
-[Your License Here]
-
 ## 👥 Contributors
 
-[Your Name/Team]
+**Shykat Roy**
+
+For more information, visit my website: [https://dnox.xyz/](https://dnox.xyz/)
