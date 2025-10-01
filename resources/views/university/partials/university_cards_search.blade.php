@@ -4,12 +4,12 @@
          style="opacity: 1; transform: translateY(0px); transition: opacity 0.5s, transform 0.5s;">
 
         <div class="university-image"
-             style="background-image: url('{{ getValue($university, 'image') ? asset('images/' . getValue($university, 'image')) : asset('assets/default-university.jpg') }}');
+             style="background-image: url('{{ getValue($university, 'image') ? asset('storage/' . getValue($university, 'image')) : asset('assets/default-university.jpg') }}');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;">
             <div class="university-logo d-flex align-items-center">
-                <img src="{{ getValue($university, 'logo') ? asset('images/' . getValue($university, 'logo')) : asset('assets/default-university.jpg') }}"
+                <img src="{{ getValue($university, 'logo') ? asset('storage/' . getValue($university, 'logo')) : asset('assets/default-university.jpg') }}"
                      width="50" height="50"
                      alt="{{ getFormatted($university, 'name') }} Logo"
                      class="me-2 rounded-circle logo-img">
