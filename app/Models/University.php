@@ -43,6 +43,8 @@ class University extends Model
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'logo' => $this->logo ?? null,
+            'image' => $this->image ?? null,
             'cricos' => $this->cricos,
             'country' => $this->country?->name,
             'city' => $this->city?->name,

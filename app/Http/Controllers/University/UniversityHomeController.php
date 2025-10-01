@@ -27,6 +27,7 @@ class UniversityHomeController extends Controller
                 'highlightPreTag' => '<mark>',
                 'highlightPostTag' => '</mark>',
                 'attributesToHighlight' => ['name','country','city','studyAreas'],
+                'attributesToRetrieve' => ['id', 'name', 'description', 'cricos', 'country', 'city', 'studyAreas', 'logo', 'image']
             ];
 
             if ($country) {
