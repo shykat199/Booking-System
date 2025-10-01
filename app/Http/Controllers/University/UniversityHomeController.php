@@ -79,11 +79,42 @@ class UniversityHomeController extends Controller
     public function filter(Request $request)
     {
         $countryIds = $request->input('countries', []);
+        $selectedSort = $request->input('sort'); // get sorting option from request
 
-        $query = University::orderBy('id', 'asc');
+        $query = University::query();
 
         if (!empty($countryIds)) {
             $query->whereIn('country_id', $countryIds);
+        }
+
+        switch ($selectedSort) {
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'country_asc':
+                $query->with('country')
+                    ->orderBy(
+                        Country::select('name')
+                            ->whereColumn('countries.id', 'universities.country_id'),
+                        'asc'
+                    );
+                break;
+
+            case 'country_desc':
+                $query->with('country')
+                    ->orderBy(
+                        Country::select('name')
+                            ->whereColumn('countries.id', 'universities.country_id'),
+                        'desc'
+                    );
+                break;
+
+            default:
+                $query->orderBy('id', 'asc'); // fallback
+                break;
         }
 
         $universities = $query->get();
@@ -97,6 +128,7 @@ class UniversityHomeController extends Controller
             'html' => $html,
         ]);
     }
+
 
     public function loadMore(Request $request)
     {

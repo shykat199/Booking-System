@@ -3,6 +3,28 @@
         <h5 class="filter-title">Filter Options</h5>
 
         <div class="filter-section">
+            <h6 data-bs-toggle="collapse" data-bs-target="#studyAreaSorting">Sorting</h6>
+            <div class="filter-options collapse" id="studyAreaSorting">
+                <div class="filter-option">
+                    <input class="form-check-input" type="radio" name="sortOption" id="sortNameAsc" value="name_asc">
+                    <label class="form-check-label ms-2" for="sortNameAsc">Name (A–Z)</label>
+                </div>
+                <div class="filter-option">
+                    <input class="form-check-input" type="radio" name="sortOption" id="sortNameDesc" value="name_desc">
+                    <label class="form-check-label ms-2" for="sortNameDesc">Name (Z–A)</label>
+                </div>
+                <div class="filter-option">
+                    <input class="form-check-input" type="radio" name="sortOption" id="sortCountryAsc" value="country_asc">
+                    <label class="form-check-label ms-2" for="sortCountryAsc">Country (A–Z)</label>
+                </div>
+                <div class="filter-option">
+                    <input class="form-check-input" type="radio" name="sortOption" id="sortCountryDesc" value="country_desc">
+                    <label class="form-check-label ms-2" for="sortCountryDesc">Country (Z–A)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-section">
             <h6 data-bs-toggle="collapse" data-bs-target="#countriesFilter">Countries</h6>
             <div class="filter-options collapse show" id="countriesFilter">
                 @foreach($countries as $country)
@@ -81,13 +103,19 @@
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             let offset = 0;
             let selectedCountries = [];
+            let selectedSort = null;
 
             function fetchFilteredUniversities() {
                 loader.style.display = 'flex';
 
                 const params = new URLSearchParams();
                 params.append('offset', offset);
+
                 selectedCountries.forEach(id => params.append('countries[]', id));
+
+                if (selectedSort) {
+                    params.append('sort', selectedSort);
+                }
 
                 fetch(`{{ route('university.filter') }}?${params.toString()}`)
                     .then(res => res.json())
@@ -107,6 +135,15 @@
                 cb.addEventListener('change', function() {
                     selectedCountries = Array.from(document.querySelectorAll('.country-checkbox:checked'))
                         .map(el => el.value);
+                    offset = 0; // reset
+                    fetchFilteredUniversities();
+                });
+            });
+
+            // Sorting radio change
+            document.querySelectorAll('input[name="sortOption"]').forEach(rb => {
+                rb.addEventListener('change', function() {
+                    selectedSort = this.value; // save selected radio value
                     offset = 0; // reset
                     fetchFilteredUniversities();
                 });
