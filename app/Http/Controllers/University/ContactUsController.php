@@ -55,7 +55,10 @@ class ContactUsController extends Controller
         $result = $response->json();
 
         if (!($result['success'] ?? false)) {
-            return back()->withErrors(['captcha' => 'Captcha verification failed, please try again.']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Captcha verification failed, please try again.'
+            ]);
         }
 
         ContactUs::create([

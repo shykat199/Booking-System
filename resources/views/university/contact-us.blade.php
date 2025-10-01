@@ -126,6 +126,8 @@
                 .then(data => {
                     if (data.success) {
                         form.reset();
+                        turnstile.reset(); // 🔥 Reset Cloudflare captcha
+
                         Swal.fire({
                             toast: true,
                             position: 'top-end',
@@ -136,6 +138,7 @@
                             timerProgressBar: true
                         });
                     } else {
+                        turnstile.reset(); // also reset if captcha failed
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -145,6 +148,7 @@
                 })
                 .catch(err => {
                     console.error(err);
+                    turnstile.reset();
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
