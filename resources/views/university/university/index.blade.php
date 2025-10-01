@@ -68,8 +68,8 @@
                 "columns": [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'country', name: 'country'},
-                    {data: 'city', name: 'city'},
+                    {data: 'country', name: 'country.name'},
+                    {data: 'city', name: 'city.name'},
                     {data: 'campus_count', name: 'campus_count'},
                     {data: 'logo', name: 'logo',orderable: false, searchable: false},
                     {data: 'status', name: 'status',orderable: false, searchable: false},
