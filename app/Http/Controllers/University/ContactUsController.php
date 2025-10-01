@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\ContactUs;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -43,6 +44,18 @@ class ContactUsController extends Controller
                 'success' => false,
                 'message' => $validator->errors()->first()
             ]);
+        }
+
+        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('CLOUDFLARE_TURNSTILE_SECRET_KEY'),
+            'response' => $request->input('cf-turnstile-response'),
+            'remoteip' => $request->ip(),
+        ]);
+
+        $result = $response->json();
+
+        if (!($result['success'] ?? false)) {
+            return back()->withErrors(['captcha' => 'Captcha verification failed, please try again.']);
         }
 
         ContactUs::create([

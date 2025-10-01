@@ -50,7 +50,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-orange w-100 rounded-pill">
+                        <div class="cf-turnstile mb-3"
+                             data-sitekey="{{env('CLOUDFLARE_TURNSTILE_SITE_KEY')}}"
+                             data-theme="light">
+                        </div>
+
+                        <button type="submit" id="sendQueryBtn">
                             Send Query
                         </button>
                     </form>

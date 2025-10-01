@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/css/university.css')}}" media="screen"/>
-
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
     <style>
         #filterLoader {
             display: none;
@@ -26,6 +26,37 @@
             width: 3rem;
             height: 3rem;
         }
+
+        #sendQueryBtn {
+            width: 100%;
+            font-family: Poppins, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            padding: 14px;
+            border: none;
+            border-radius: 999px;
+            background: #e55a2b;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 16px rgba(229, 90, 43, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        #sendQueryBtn:hover {
+            background: #cf4f26;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229, 90, 43, 0.5);
+        }
+
+        #sendQueryBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(229, 90, 43, 0.4);
+        }
+
     </style>
 
     @stack('university.style')
