@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete-program/{id}', 'destroy')->name('delete-program');
     });
 
+    Route::controller(ContactUsController::class)->group(function () {
+        Route::get('/contact-list', 'index')->name('contact-us-list');
+    });
+
     Route::controller(UniversityController::class)->group(function () {
         Route::get('/university-list', 'index')->name('university');
         Route::get('/create-university', 'create')->name('create-university');

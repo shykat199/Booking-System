@@ -80,6 +80,19 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="sidebar-list {{request()->routeIs('contact-us-list') ? 'active' : ''}}">
+                <a class="sidebar-link user-task" href="javascript:void(0)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h6>Contact Us</h6>
+                </a>
+                <ul class="sidebar-submenu" style="display: {{request()->routeIs('contact-us-list') ? 'block' : 'none'}};">
+                    <li>
+                        <a class="{{request()->routeIs('contact-us-list') ? 'active' : ''}}" href="{{ route('contact-us-list') }}">Contact Us List</a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </div>
     <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
