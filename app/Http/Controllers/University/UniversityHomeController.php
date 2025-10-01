@@ -4,6 +4,7 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\Programs;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Meilisearch\Client;
@@ -109,6 +110,23 @@ class UniversityHomeController extends Controller
         return response()->json([
             'html' => $html,
             'allLoaded' => $allLoaded,
+        ]);
+    }
+
+    public function showUniversityDetails($id)
+    {
+        $university = University::with(['country','city', 'studyAreas.program'])->withCount('studyAreas')->findOrFail($id);
+        $universityProgramIds = $university->studyAreas->unique('program_id')->pluck('program_id')->toArray();
+        $universityPrograms = Programs::with(['studyAreas'=>function ($query) use ($university) {
+            $query->where('university_id', $university->id);
+        }])->withCount(['studyAreas'=>function ($q) use ($university) {
+            $q->where('university_id', $university->id);
+        }])->whereIn('id', $universityProgramIds)->get();
+
+        return view('partials.university-modal', [
+            'university' => $university,
+            'universityPrograms'=>$universityPrograms,
+            'availableProgramCount'=> !empty($universityProgramIds) ? count($universityProgramIds) : 0,
         ]);
     }
 }

@@ -71,7 +71,29 @@
                 <button class="search-icon" id="searchToggle">
                     <i class="fas fa-search"></i>
                 </button>
-                <button class="btn btn-orange">Book a Free Consultation</button>
+
+                <div style="text-align:center;">
+                    <button
+                        style="
+            font-family: Poppins, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            background: #e55a2b;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(99,102,241,.3);
+            transition: all 0.3s ease;
+        "
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(99,102,241,.35)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 16px rgba(99,102,241,.3)';"
+                    >
+                        Book A Free Consultation
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>

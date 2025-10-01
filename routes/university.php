@@ -13,6 +13,7 @@ Route::controller(UniversityHomeController::class)->prefix('university')->name('
     Route::get('/universities/load-more', 'loadMore')->name('loadMore');
     Route::get('/universities/filter', 'filter')->name('filter');
     Route::get('/configure-index', 'configureIndex');
+    Route::get('/university-details/{id}', 'showUniversityDetails')->name('university.modal');
 });
 
 Route::middleware('auth')->group(function () {
