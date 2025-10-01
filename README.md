@@ -1,426 +1,392 @@
-# Laravel Service Booking System API
+# Laravel University Project
 
-A comprehensive API-based service booking system built with Laravel, featuring customer registration, service management, and booking functionality with admin control panel.
+A Laravel-based university management system with advanced search capabilities using Laravel Scout and Meilisearch.
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
-**Live API URL:** https://api-booking-system.dnox.xyz/
+- **Public URL**: [https://test.dnox.xyz/university](https://test.dnox.xyz/university)
+- **Admin Panel**: [https://test.dnox.xyz/login](https://test.dnox.xyz/login)
 
-**Hosted on:** AWS Linux Operating System
-
-## 📋 Table of Contents
-
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation & Setup](#installation--setup)
-- [API Documentation](#api-documentation)
-- [Database Structure](#database-structure)
-- [Testing](#testing)
-- [Screenshots & Sample Outputs](#screenshots--sample-outputs)
-- [Developer Information](#developer-information)
-
-## 🎯 Project Overview
-
-This Laravel-based service booking system provides a robust API for managing service bookings with separate authentication for customers and administrators. The system allows customers to browse services and make bookings, while admins can manage services and monitor all bookings.
-
-### Core Functionality:
-- **Customer Registration & Authentication**
-- **Service Browsing & Booking**
-- **Admin Service Management**
-- **Booking Management System**
-- **JWT/Token-based Security**
+### Admin Credentials
+```
+Email: admin@gmail.com
+Password: 12345678
+```
 
 ## ✨ Features
 
-### Authentication System
-- **User Registration & Login API** (Customer)
-- **Admin Login API** (Seeded credentials)
-- **JWT Token-based Authentication** using Laravel Passport
-- **Role-based Access Control**
+- **Advanced Search**: Fuzzy search with prefix matching using Laravel Scout and Meilisearch
+- **Filter System**: Filter universities by country
+- **Load More**: Pagination with load more functionality
+- **Seeded Data**: Pre-populated dummy data for countries, cities, programs, and universities
 
-### Customer Features
-- **Service Discovery** - Browse available services
-- **Book Service** - Book available services
-- **List Of Booked Service** - Show the Booked available services
+## 📋 Prerequisites
 
-### Admin Features
-- **Service Management** - Create, update, delete services
-- **Booking Overview** - Monitor all customer bookings
-- **Service Status Control** - Active/Inactive services
-
-### Data Validation
-- **Comprehensive Form Validation** for all inputs
-- **Date Validation** - Prevent booking on past dates
-- **Business Logic Validation** - Ensure data integrity
-- **Error Handling** - Proper API error responses
-
-## 🛠 Technologies Used
-
-- **Backend:** Laravel 12.x
-- **Authentication:** Laravel Passport
-- **Database:** MySQL
-- **API Documentation:** Postman Collection
-- **Hosting:** AWS Linux
-- **Version Control:** Git
-
-## 📦 Installation & Setup
-
-### Prerequisites
 - PHP >= 8.1
 - Composer
-- MySQL
+- Apache Web Server
+- MySQL/MariaDB
+- Node.js & NPM
+- Meilisearch
 
-### Step-by-Step Installation
+## 🚀 Installation
 
-#### 1. Clone Repository
+### 1. Clone the Repository
+
 ```bash
 git clone <repository-url>
-cd laravel-booking-system
+cd <project-directory>
 ```
 
-#### 2. Install Dependencies
+### 2. Install PHP Dependencies
+
 ```bash
-# Install PHP dependencies
 composer install
-
-# Install Node dependencies
-npm install && npm run build
 ```
 
-#### 3. Environment Configuration
-```bash
-# Copy environment file
-cp .env.example .env
+### 3. Install Node Dependencies
 
-# Generate application key
+```bash
+npm install
+npm run build
+```
+
+### 4. Environment Configuration
+
+Create your environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate application key:
+
+```bash
 php artisan key:generate
 ```
 
-#### 4. Database Setup
-Update `.env` file with your database credentials:
+Update your `.env` file with the following configurations:
+
 ```env
+APP_NAME="University Management"
+APP_URL=https://test.dnox.xyz
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=booking_system
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+
+SCOUT_DRIVER=meilisearch
+MEILISEARCH_HOST=http://127.0.0.1:7700
+MEILISEARCH_KEY="3a84e01f-0fc7-4685-8553-f2f29f71c333"
 ```
 
-#### 5. Laravel Passport Installation
+### 5. Database Setup
+
+Run migrations:
+
 ```bash
-# Install Passport
-composer require laravel/passport
-
-# Run migrations
 php artisan migrate
-
-# Install Passport
-php artisan passport:install
-
-# Generate keys
-php artisan passport:keys
 ```
 
-#### 6. Database Migration & Seeding
-```bash
-# Run migrations
-php artisan migrate
+### 6. Seed Database with Dummy Data
 
-# Seed database with sample data
+Run the seeders to populate your database:
+
+```bash
+php artisan db:seed --class=CountrySeeder
+php artisan db:seed --class=CitySeeder
+php artisan db:seed --class=ProgramSeeder
+php artisan db:seed --class=UniversitySeeder
+```
+
+Or seed all at once:
+
+```bash
 php artisan db:seed
 ```
 
-#### 7. Start Development Server
+## 🔍 Laravel Scout & Meilisearch Setup
+
+### Install Laravel Scout
+
 ```bash
-# Start Laravel server
-php artisan serve
-
-# Server will be available at: http://localhost:8000
+composer require laravel/scout
 ```
 
-## 📚 API Documentation
+Publish Scout configuration:
 
-### Public Endpoints
-
-#### Customer Registration
-```http
-POST /api/v1/register
-Content-Type: application/json
-
-{
-    "name": "John Doe",
-    "email": "john@example.com",
-    "phone": "01300000000",
-    "password": "12345678",
-    "password_confirmation": "12345678"
-}
+```bash
+php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
 ```
 
-#### Customer/Admin Login
-```http
-POST /api/v1/login
-Content-Type: application/json
+### Install Meilisearch PHP Client
 
-{
-    "email": "admin@example.com",
-    "password": "password"
-}
+```bash
+composer require meilisearch/meilisearch-php
 ```
 
-### Authenticated Customer Endpoints
+### Install Meilisearch Server
 
-#### Get Available Services
-```http
-GET /api/v1/customer/services
-Authorization: Bearer {token}
+#### For Ubuntu/Debian:
+
+```bash
+curl -L https://install.meilisearch.com | sh
 ```
 
-#### Create Booking
-```http
-POST /api/v1/customer/bookings
-Authorization: Bearer {token}
-Content-Type: application/json
+Move to bin directory:
 
-{
-    "service_id": 1,
-    "booking_date": "2024-12-25",
-}
+```bash
+sudo mv ./meilisearch /usr/local/bin/
 ```
 
-#### Get User Bookings
-```http
-GET /api/v1/customer/bookings
-Authorization: Bearer {token}
+#### For macOS (using Homebrew):
+
+```bash
+brew install meilisearch
 ```
 
-### Authenticated Admin Endpoints
+#### For Windows:
 
-#### Create Service
-```http
-POST /api/v1/admin/services
-Authorization: Bearer {admin-token}
-Content-Type: application/json
+Download the latest release from [Meilisearch GitHub](https://github.com/meilisearch/meilisearch/releases)
 
-{
-    "name": "Web Development",
-    "description": "Professional web development service",
-    "price": 999.99,
-    "status": 1
-}
+### Configure Meilisearch
+
+Start Meilisearch with your master key:
+
+```bash
+meilisearch --master-key="3a84e01f-0fc7-4685-8553-f2f29f71c333"
 ```
 
-#### Update Service
-```http
-PUT /api/v1/admin/services/{id}
-Authorization: Bearer {admin-token}
-Content-Type: application/json
+### Index Your Data
 
-{
-    "name": "AI Development",
-    "description": "Professional AI development service",
-    "price": 999.99,
-    "status": 1
-}
+Import existing data into Meilisearch:
+
+```bash
+php artisan scout:import "App\Models\University"
 ```
 
-#### Delete Service
-```http
-DELETE /api/v1/admin/services/{id}
-Authorization: Bearer {admin-token}
+Flush and reimport if needed:
+
+```bash
+php artisan scout:flush "App\Models\University"
+php artisan scout:import "App\Models\University"
 ```
 
-#### Get All Bookings (Admin)
-```http
-GET /api/v1/admin/booking-list
-Authorization: Bearer {admin-token}
+## 🌐 Apache Configuration
+
+### Enable Required Modules
+
+```bash
+sudo a2enmod rewrite
+sudo a2enmod ssl
+sudo systemctl restart apache2
 ```
 
-## 🗄 Database Structure
+### Virtual Host Configuration
 
-### Users Table
-- `id` - Primary Key
-- `name` - User's full name
-- `email` - Unique email address
-- `password` - Encrypted password
-- `role` - Role for all user ex: 1 for Admin 2 for User
-- `timestamps`
+Create a new virtual host file:
 
-### Services Table
-- `id` - Primary Key
-- `name` - Service name
-- `description` - Service description
-- `price` - Service price (decimal)
-- `status` - Service status (active/inactive)
-- `timestamps`
-
-### Service Bookings Table
-- `id` - Primary Key
-- `user_id` - Foreign key to users
-- `service_id` - Foreign key to services
-- `booking_date` - Date of booking
-- `status` - Booking status
-- `timestamps`
-
-## 🧪 Testing
-
-### Using Postman
-1. Import the provided Postman collection
-2. Set up environment variables:
-    - `base_url`: https://api-booking-system.dnox.xyz
-    - `api_url`: https://api-booking-system.dnox.xyz/api/v1/
-    - `token`: https://api.postman.com/collections/23744087-aefc4adb-d211-404f-a136-b9a6d70aaa6e?access_key=PMAT-01K3PB42G9Z587MH3GKTDAHAHW
-
-### Sample Test Flow
-1. **Register Customer** → Get registration confirmation
-2. **Login Customer** → Receive access token
-3. **Get Services** → View available services
-4. **Create Booking** → Book a service
-5. **View Bookings** → See booking history
-
-### Admin Testing
-1. **Login Admin** (use seeded credentials)
-2. **Create Service** → Add new service
-3. **View All Bookings** → Monitor customer bookings
-4. **Update/Delete Services** → Manage service catalog
-
-## 📸 Screenshots & Sample Outputs
-
-![Alt Text](/screenshots/Screenshot%20(22).png)
-
-![Alt Text](/screenshots/Screenshot%20(23).png)
-
-![Alt Text](/screenshots/Screenshot%20(24).png)
-
-![Alt Text](/screenshots/Screenshot%20(25).png)
-
-
-### Successful Registration Response
-```json
-{
-    "success": true,
-    "message": "User registered successfully",
-    "data": {
-        "user": {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john@example.com"
-        },
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
-    }
-}
+```bash
+sudo nano /etc/apache2/sites-available/university.conf
 ```
 
-### Services List Response
-```json
-{
-    "success": true,
-    "data": [
-        {
-            "id": 1,
-            "name": "Web Development",
-            "description": "Professional web development service",
-            "price": "999.99",
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "name": "Mobile App Development",
-            "description": "iOS and Android app development",
-            "price": "1499.99",
-            "status": "active"
-        }
-    ]
-}
+Add the following configuration:
+
+```apache
+<VirtualHost *:80>
+    ServerName test.dnox.xyz
+    DocumentRoot /path/to/your/project/public
+
+    <Directory /path/to/your/project/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/university_error.log
+    CustomLog ${APACHE_LOG_DIR}/university_access.log combined
+</VirtualHost>
 ```
 
-### Booking Creation Response
-```json
-{
-    "success": true,
-    "message": "Booking created successfully",
-    "data": {
-        "id": 1,
-        "user_id": 1,
-        "service_id": 1,
-        "booking_date": "2024-12-25",
-        "status": "pending",
-        "service": {
-            "name": "Web Development",
-            "price": "999.99"
-        }
-    }
-}
+For HTTPS (recommended):
+
+```apache
+<VirtualHost *:443>
+    ServerName test.dnox.xyz
+    DocumentRoot /path/to/your/project/public
+
+    SSLEngine on
+    SSLCertificateFile /path/to/certificate.crt
+    SSLCertificateKeyFile /path/to/private.key
+    SSLCertificateChainFile /path/to/chain.crt
+
+    <Directory /path/to/your/project/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/university_ssl_error.log
+    CustomLog ${APACHE_LOG_DIR}/university_ssl_access.log combined
+</VirtualHost>
 ```
 
-## 🔧 Key Features Implemented
+Enable the site:
 
-- ✅ **Laravel Passport Authentication**
-- ✅ **Role-based Access Control** (Customer/Admin)
-- ✅ **Comprehensive API Validation**
-- ✅ **RESTful API Design**
-- ✅ **Database Relationships** (User → Booking → Service)
-- ✅ **Date Validation** (No past date bookings)
-- ✅ **Database Seeders** (Sample data & admin user)
-- ✅ **Error Handling** & API Responses
-- ✅ **Security Best Practices**
-- ✅ **Clean Code Architecture**
+```bash
+sudo a2ensite university.conf
+sudo systemctl reload apache2
+```
 
-## 🌐 Deployment Information
+### Set Permissions
 
-- **Platform:** AWS (Amazon Web Services)
-- **Operating System:** Linux
-- **Web Server:** Apache
-- **Database:** MySQL
-- **SSL Certificate:** Enabled (HTTPS)
-- **Domain:** api-booking-system.dnox.xyz
+```bash
+sudo chown -R www-data:www-data /path/to/your/project
+sudo chmod -R 755 /path/to/your/project
+sudo chmod -R 775 /path/to/your/project/storage
+sudo chmod -R 775 /path/to/your/project/bootstrap/cache
+```
 
-## 👨‍💻 Developer Information
+## 🔄 Keep System Running (Production)
 
-### Connect with Me
+### Running Meilisearch as a Service
 
-- **Portfolio:** https://dnox.xyz/
-- **GitHub:** https://github.com/shykat199
-- **LinkedIn:** https://www.linkedin.com/in/shykay-roy/
+Create a systemd service file:
 
-### Featured Projects
+```bash
+sudo nano /etc/systemd/system/meilisearch.service
+```
 
-1. **Money / Coin Investment Site (MLM Service Multi Level Referral System)** - [https://fatx.io/]
-    - Laravel, API, Role Based Access, MySQL, React
-   
-2. **Ecommerce Site** - [https://srfmart.com/]
-    - Laravel, API, Role Based Access, MySQL, React
+Add the following:
 
-3. **Task Management System** - [https://github.com/shykat199/Project-Management]
-    - Laravel, JS, Drag drop feature like trello
+```ini
+[Unit]
+Description=Meilisearch
+After=network.target
 
-4. **Real Estate Portal** - [https://rojafood.com/]
-    - Laravel, MySQL, Management of property
-   
-5. **Ecommerce Site** - [https://ecommerce.dnox.xyz/]
-    - Laravel, MySQL, Management of property, Blade 
+[Service]
+Type=simple
+User=www-data
+ExecStart=/usr/local/bin/meilisearch --master-key="3a84e01f-0fc7-4685-8553-f2f29f71c333" --env production
+Restart=on-failure
 
+[Install]
+WantedBy=multi-user.target
+```
 
-### Technical Skills
+Enable and start the service:
 
-- **Backend:** Laravel, PHP, API, Python
-- **Frontend:**Vue.js, JavaScript, HTML/CSS
-- **Database:** MySQL
-- **DevOps:** AWS, Linux, Nginx
-- **API Development:** REST, JWT Authentication
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable meilisearch
+sudo systemctl start meilisearch
+sudo systemctl status meilisearch
+```
 
----
+### Running Laravel Queue (if applicable)
 
-## 📞 Support & Contact
+If you're using queues, create a supervisor configuration:
 
-For any questions or support regarding this project:
+```bash
+sudo nano /etc/supervisor/conf.d/laravel-worker.conf
+```
 
-- **Email:** [shykatroybdku199@gmail.com]
-- **Documentation:** Available in this README
+Add:
 
----
+```ini
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /path/to/your/project/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/path/to/your/project/storage/logs/worker.log
+stopwaitsecs=3600
+```
 
-**Built with ❤️ using Laravel | Hosted on AWS Linux**
+Update supervisor:
 
-*This project demonstrates proficiency in Laravel development, API design, authentication systems, and cloud deployment practices.*
+```bash
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start laravel-worker:*
+```
+
+## 🔎 Search Features
+
+This project uses **Laravel Scout** with **Meilisearch** to provide:
+
+- **Fuzzy Search**: Handles typos and approximate matches
+- **Prefix Search**: Search as you type with instant results
+- **Fast Performance**: Meilisearch provides sub-50ms search responses
+- **Relevance Ranking**: Automatically ranks results by relevance
+
+### How It Works
+
+The search functionality allows users to find universities with:
+- Typo tolerance
+- Prefix matching (searching for "har" will match "Harvard")
+- Multi-field search across university names, locations, and programs
+- Country-based filtering
+- Load more pagination for better UX
+
+## 🛠️ Maintenance Commands
+
+### Clear Cache
+
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+### Rebuild Search Index
+
+```bash
+php artisan scout:flush "App\Models\University"
+php artisan scout:import "App\Models\University"
+```
+
+### Check Meilisearch Status
+
+```bash
+curl http://127.0.0.1:7700/health
+```
+
+## 📝 Notes
+
+- Make sure Meilisearch is running before starting the application
+- For production, always use HTTPS and secure your master key
+- Keep your `.env` file secure and never commit it to version control
+- Regular backups of your database are recommended
+
+## 🐛 Troubleshooting
+
+**Search not working?**
+- Check if Meilisearch is running: `sudo systemctl status meilisearch`
+- Verify the index exists: Visit `http://127.0.0.1:7700` in browser
+- Reimport data: `php artisan scout:import "App\Models\University"`
+
+**Apache issues?**
+- Check error logs: `sudo tail -f /var/log/apache2/error.log`
+- Verify permissions: Ensure `storage` and `bootstrap/cache` are writable
+
+**Database connection failed?**
+- Verify credentials in `.env`
+- Check if MySQL is running: `sudo systemctl status mysql`
+
+## 📄 License
+
+[Your License Here]
+
+## 👥 Contributors
+
+[Your Name/Team]
