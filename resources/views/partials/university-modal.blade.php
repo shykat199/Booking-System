@@ -171,7 +171,7 @@
     <!-- Hero Section -->
     <div class="modal-hero">
         <div class="hero-bg"
-             style="background-image:url('{{ $university->image ? asset('images/universities/' . $university->image) : asset('assets/default-university.jpg') }}')">
+             style="background-image:url('{{ $university->image ? asset('images/' . $university->image) : asset('assets/default-university.jpg') }}')">
         </div>
         <div class="hero-overlay"></div>
 
@@ -180,7 +180,7 @@
                 <div class="hero-flex">
                     <div>
                         <div class="logo-wrapper">
-                            <img src="{{ $university->logo ? asset('images/universities/' . $university->logo) : asset('assets/default-university.jpg') }}"
+                            <img src="{{ $university->logo ? asset('images/' . $university->logo) : asset('assets/default-university.jpg') }}"
                                  alt="{{$university->name}}">
                             <div class="logo-glow"></div>
                         </div>
