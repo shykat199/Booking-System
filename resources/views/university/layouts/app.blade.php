@@ -7,6 +7,27 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/css/university.css')}}" media="screen"/>
+
+    <style>
+        #filterLoader {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #filterLoader .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+
     @stack('university.style')
 
 </head>
@@ -30,8 +51,8 @@
 
         </div>
 
-        <div id="filterLoader" style="display: none; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <div id="filterLoader">
+            <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
