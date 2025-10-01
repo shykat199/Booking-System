@@ -6,10 +6,10 @@
                 <div class="search-container">
                     <i class="fas fa-search" style="color: #999; margin-left: 20px;"></i>
                     <input type="text" name="q" class="search-input" placeholder="Search Universities, Courses" id="universitySearch" value="{{ request('q') ?? '' }}">
-                    <select class="country-dropdown" id="countryFilter">
+                    <select class="country-dropdown" name="country" id="countryFilter">
                         <option value="">Choose Country</option>
                         @foreach($countries as $country)
-                            <option value="{{$country->id}}">{{$country->name}}</option>
+                            <option value="{{$country->id}}" {{request('country') == $country->id ? 'selected':''}}>{{$country->name}}</option>
                         @endforeach
                     </select>
                     <button class="search-btn" id="searchBtn">

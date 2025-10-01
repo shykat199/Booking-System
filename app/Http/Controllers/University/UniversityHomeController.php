@@ -14,38 +14,46 @@ class UniversityHomeController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('q');
+        $country = $request->get('country');
 
-        if ($search) {
+        if ($search || $country) {
             $client = new \Meilisearch\Client(config('scout.meilisearch.host'), config('scout.meilisearch.key'));
             $index = $client->index('universities');
 
-            $results = $index->search($search, [
+            $index->updateFilterableAttributes(['country']);
+
+            $searchOption = [
                 'limit' => 15,
                 'highlightPreTag' => '<mark>',
                 'highlightPostTag' => '</mark>',
                 'attributesToHighlight' => ['name','country','city','studyAreas'],
-            ]);
+            ];
 
+            if ($country) {
+                $searchOption['filter'] = "country = '{$country}'";
+            }
+
+            $searchQuery = $search ?? '';
+            $results = $index->search($searchQuery, $searchOption);
             $resultsArray = $results->toArray();
 
             $data['universities'] = $resultsArray['hits'];
             $data['total'] = $resultsArray['estimatedTotalHits'];
-
             $data['countries'] = Country::where('status', ACTIVE_STATUS)->get();
 
             return view('university.home-search', $data);
-        } else {
-            $data['universities'] = University::with(['country','city'])
-                ->where('status', ACTIVE_STATUS)
-                ->latest()
-                ->limit(15)
-                ->get();
-            $data['total'] = University::where('status', ACTIVE_STATUS)->count();
-
-            $data['countries'] = Country::where('status', ACTIVE_STATUS)->get();
-
-            return view('university.home', $data);
         }
+
+        $data['universities'] = University::with(['country','city'])
+            ->where('status', ACTIVE_STATUS)
+            ->latest()
+            ->limit(15)
+            ->get();
+
+        $data['total'] = University::where('status', ACTIVE_STATUS)->count();
+        $data['countries'] = Country::where('status', ACTIVE_STATUS)->get();
+
+        return view('university.home', $data);
     }
 
     public function configureIndex()

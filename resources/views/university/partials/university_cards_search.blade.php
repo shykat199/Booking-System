@@ -22,7 +22,7 @@
             <div class="university-info">
                 <div class="info-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    {!! getFormatted($university, 'country') ?? getCountryName($university) !!}
+                    {!! getCountryName($university) !!}
                 </div>
                 <div class="info-item">
                     <i class="fas fa-id-badge"></i>

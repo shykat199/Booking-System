@@ -54,9 +54,17 @@ function getFormatted($item, $key) {
 }
 
 function getCountryName($item) {
-    // Array from Meilisearch
-    if (is_array($item) && isset($item['country'])) return $item['country'];
+    if (is_array($item) && isset($item['country'])){
+
+        if (is_int($item['country'])) {
+            return \App\Models\Country::find($item['country'])->name;
+        }
+        return $item['country'];
+
+    }
     // Eloquent model
-    if (is_object($item) && isset($item->country->name)) return $item->country->name;
+    if (is_object($item) && isset($item->country->name)){
+        return $item->country->name;
+    }
     return '';
 }
