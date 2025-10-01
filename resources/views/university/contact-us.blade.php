@@ -50,12 +50,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-{{--                        <div id="cf-turnstile" class="cf-turnstile"--}}
-{{--                            data-sitekey="{{config('app.cloud_flare_site_key')}}"--}}
-{{--                            data-theme="light"--}}
-{{--                            data-size="normal"--}}
-{{--                            data-callback="onSuccess"--}}
-{{--                        ></div>--}}
+                        <div id="cf-turnstile" class="cf-turnstile"
+                            data-sitekey="{{config('app.cloud_flare_site_key')}}"
+                            data-theme="light"
+                            data-size="normal"
+                            data-callback="onSuccess"
+                        ></div>
 
                         <button type="submit" id="sendQueryBtn">
                             Send Query
@@ -72,19 +72,6 @@
 
     <script>
         let turnstileWidgetId;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            turnstileWidgetId = turnstile.render('#cf-turnstile', {
-                sitekey: "{{ config('app.cloud_flare_site_key') }}",
-                theme: "light",
-                size: "normal",
-                callback: onSuccess
-            });
-        });
-
-        function onSuccess(token) {
-            console.log("Captcha solved:", token);
-        }
 
         document.getElementById('contactUsForm').addEventListener('submit', function(e) {
             e.preventDefault();
