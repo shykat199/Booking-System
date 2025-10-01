@@ -12,12 +12,7 @@ Route::controller(UniversityHomeController::class)->prefix('university')->name('
     route::get('/', 'index')->name('home');
     Route::get('/universities/load-more', 'loadMore')->name('loadMore');
     Route::get('/universities/filter', 'filter')->name('filter');
-<<<<<<< HEAD
-
-
-=======
     Route::get('/configure-index', 'configureIndex');
->>>>>>> 767dad89759f212545bf68a3618d015122b5327f
 });
 
 Route::middleware('auth')->group(function () {

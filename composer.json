@@ -7,13 +7,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-<<<<<<< HEAD
-        "laravel/fortify": "^1.30",
-        "laravel/framework": "^12.0",
-        "laravel/passport": "^13.0",
-        "laravel/socialite": "^5.23",
-        "laravel/tinker": "^2.10.1",
-=======
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^12.0",
@@ -22,7 +15,6 @@
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.10.1",
         "meilisearch/meilisearch-php": "^1.16",
->>>>>>> 767dad89759f212545bf68a3618d015122b5327f
         "realrashid/sweet-alert": "^7.3",
         "yajra/laravel-datatables-oracle": "^12.0"
     },

@@ -41,8 +41,6 @@ function recentPosts($limit = 5)
 {
     return \App\Models\Blog::latest()->limit($limit)->get();
 }
-<<<<<<< HEAD
-=======
 
 function getValue($item, $key, $default = null) {
     if (is_array($item) && isset($item[$key])) return $item[$key];
@@ -62,4 +60,3 @@ function getCountryName($item) {
     if (is_object($item) && isset($item->country->name)) return $item->country->name;
     return '';
 }
->>>>>>> 767dad89759f212545bf68a3618d015122b5327f
