@@ -69,7 +69,7 @@
         <div class="footer-bottom">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; 2023 PFEC Global | All Rights Reserved</p>
+                    <p>&copy; 2025 PFEC Global | All Rights Reserved</p>
                 </div>
                 <div class="col-md-6 footer-links">
                     <a href="#">Terms & Conditions</a>
