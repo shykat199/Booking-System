@@ -99,14 +99,27 @@
     /* Programs */
     .program-box {border:1px solid #e5e7eb;border-radius:16px;margin-bottom:20px;overflow:hidden;}
     .program-header {
-        cursor:pointer;background:#f9fafb;padding:20px;
-        display:flex;align-items:center;justify-content:space-between;
+        display: flex;
+        justify-content: space-between; /* Push icon to far right */
+        align-items: center;
+        padding: 12px 15px; /* add right padding */
+        cursor: pointer;
     }
     .program-header.active {font-weight:700;}
-    .program-info {display:flex;align-items:center;gap:16px;}
+    .program-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1; /* take full remaining space */
+        min-width: 0; /* prevents text overflow */
+    }
     .program-icon {
         width:50px;height:50px;background:#eef2ff;color:#6366f1;
         border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;
+    }
+
+    .program-header i.fas {
+        font-size: 14px; /* smaller on mobile */
     }
     .program-body {padding:20px;background:#fff;display:none;}
     .study-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
@@ -184,17 +197,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="hero-wave">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,
-                172-41.86,82.39-16.72,168.19-17.73,
-                250.45-.39C823.78,31,906.67,72,
-                985.66,92.83c70.05,18.48,146.53,
-                26.09,214.34,3V0H0V27.35A600.21,
-                600.21,0,0,0,321.39,56.44Z" fill="#f8f9fa"></path>
-            </svg>
         </div>
     </div>
 
