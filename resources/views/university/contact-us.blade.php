@@ -50,10 +50,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="cf-turnstile mb-3"
-                             data-sitekey="{{env('CLOUDFLARE_TURNSTILE_SITE_KEY')}}"
-                             data-theme="light">
-                        </div>
+                        <div class="cf-turnstile"
+                            data-sitekey="{{env('CLOUDFLARE_TURNSTILE_SITE_KEY')}}"
+                            data-theme="light"
+                            data-size="normal"
+                            data-callback="onSuccess"
+                        ></div>
 
                         <button type="submit" id="sendQueryBtn">
                             Send Query
